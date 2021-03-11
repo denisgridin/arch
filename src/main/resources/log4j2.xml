@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG">
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[line %L]\t%d{dd MMM yyyy HH:mm:ss,SSS} [%t] %-5level %c{1}/%M - %msg%n"/>
+        </Console>
+        <File name="File" fileName="./src/main/resources/logs/main.txt">
+            <PatternLayout pattern="[line %L]\t%d{dd MMM yyyy HH:mm:ss,SSS} [%t] %-5level %c{1}/%M - %msg%n"/>
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <Root level="debug" includeLocation="true">
+            <AppenderRef ref="File"/>
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

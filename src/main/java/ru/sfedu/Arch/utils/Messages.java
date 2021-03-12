@@ -51,4 +51,8 @@ public class Messages {
     public static final String SUCCESS_SLIDES_ADDED = "Presentation slides added";
     public static final String ERROR_ADD_SLIDES = "Unable to add slides";
     public static final String ERROR_PRESENTATION_GET = "Unable to find presentation";
+    public static final String ERROR_SLIDE_GET = "Unable to find slide";
+    public static final String SUCCESS_SLIDE_REMOVED = "Slide successfully removed";
+    public static final String ERROR_SLIDE_UPDATE = "Unable to update slide";
+    public static final String SUCCESS_SLIDE_UPDATED = "Slide successfully updated";
 }

@@ -3,6 +3,7 @@ package ru.sfedu.Arch;
 import java.math.BigDecimal;
 
 public class Enums {
+
     public enum STATUS {
         error,
         success

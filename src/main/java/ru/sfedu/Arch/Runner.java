@@ -30,12 +30,24 @@ public class Runner {
             case LAB3: {
                 return runThirdLab(method, args);
             }
+//            case LAB4: {
+//                return runFourthLab(method, args);
+//            }
             default: {
                 log.error(Messages.ERROR_CANT_FIND_METHOD_OR_LAB);
                 return new Result(Enums.STATUS.error, Messages.ERROR_CANT_FIND_METHOD_OR_LAB);
             }
         }
     }
+
+//    private Result runFourthLab(String method, HashMap args) {
+//        try {
+//        } catch (Error error) {
+//            log.error(error);
+//            log.error(Messages.ERROR_CANT_FIND_METHOD_OR_LAB);
+//            return new Result(Enums.STATUS.error, Messages.ERROR_CANT_FIND_METHOD_OR_LAB);
+//        }
+//    }
 
     public void runFirstLab (String method) {
         try {

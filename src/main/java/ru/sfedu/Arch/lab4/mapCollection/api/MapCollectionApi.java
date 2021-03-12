@@ -13,7 +13,6 @@ import ru.sfedu.Arch.lab4.mapCollection.model.Slide;
 import ru.sfedu.Arch.utils.EventWrapper;
 import ru.sfedu.Arch.utils.Messages;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -25,6 +24,10 @@ public class MapCollectionApi extends EntityApi {
 
     private final Session session = getSession();
 
+    /**
+     * Save presentation in data source
+     * @return Result - result of execution
+     */
     public Result savePresentation (Presentation presentation) {
         try {
             return saveBean(presentation);
@@ -35,6 +38,13 @@ public class MapCollectionApi extends EntityApi {
         }
     }
 
+
+
+    /**
+     * Get presentation by id from data source
+     * @param id - identifier of presentation to search
+     * @return Result - result of execution
+     */
     public Result getPresentationById (UUID id) {
         try {
             return getBeanById(Presentation.class, id);
@@ -46,6 +56,12 @@ public class MapCollectionApi extends EntityApi {
     }
 
 
+    /**
+     * Get presentation by id from data source
+     * @param slide - Slide bean, that will be added to presentation
+     * @param presentationId - identifier of presentation to search
+     * @return Result - result of execution
+     */
     public Result addPresentationSlide (Slide slide, UUID presentationId) {
         try {
             Result resultFindPresentation = getPresentationById(presentationId);
@@ -76,16 +92,6 @@ public class MapCollectionApi extends EntityApi {
             event.error(1, error);
             event.error(2, Messages.ERROR_SLIDE_SAVE);
             return new Result(Enums.STATUS.error, Messages.ERROR_PRESENTATION_SAVE);
-        }
-    }
-
-    public Result getSlideById (UUID id) {
-        try {
-            return getBeanById(Presentation.class, id);
-        } catch (Exception error) {
-            event.error(1, error);
-            event.error(2, Messages.ERROR_GET_SLIDE);
-            return new Result(Enums.STATUS.error, Messages.ERROR_GET_SLIDE);
         }
     }
 }

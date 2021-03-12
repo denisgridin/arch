@@ -14,7 +14,6 @@ import ru.sfedu.Arch.utils.EventWrapper;
 import ru.sfedu.Arch.utils.HibernateUtil;
 import ru.sfedu.Arch.utils.Messages;
 
-import javax.swing.text.html.Option;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Optional;
@@ -94,6 +93,12 @@ public class Api3 implements IMappedSuperclassProvider {
         }
     }
 
+
+    /**
+     * Update comment
+     * @param comment - updated comment bean
+     * @return Result - result of execution
+     */
     @Override
     public Result updateComment(Comment comment) {
         try {
@@ -119,6 +124,13 @@ public class Api3 implements IMappedSuperclassProvider {
         }
     }
 
+
+
+    /**
+     * Delete comment
+     * @param comment - comment bean for removing
+     * @return Result - result of execution
+     */
     @Override
     public Result deleteComment(Comment comment) {
         try {
@@ -144,6 +156,12 @@ public class Api3 implements IMappedSuperclassProvider {
         }
     }
 
+
+    /**
+     * Method of comment creation from cli
+     * @param args - HashMap of arguments
+     * @return Result - result of execution
+     */
     public Result buildAndSaveComment(HashMap args) {
         try {
             Comment comment = new Comment();
@@ -159,6 +177,12 @@ public class Api3 implements IMappedSuperclassProvider {
         }
     }
 
+
+    /**
+     * Method of comment updating from cli
+     * @param args - HashMap of arguments
+     * @return Result - result of execution
+     */
     public Result buildAndUpdateComment(HashMap args) {
         try {
             Result resultGetComment = getCommentById(Comment.class, UUID.fromString((String) args.get(Constants.FIELD_ID)));
@@ -180,6 +204,12 @@ public class Api3 implements IMappedSuperclassProvider {
         }
     }
 
+
+    /**
+     * Method of comment removing from cli
+     * @param args - HashMap of arguments
+     * @return Result - result of execution
+     */
     public Result buildAndDeleteComment(HashMap args) {
         try {
             Result resultGetComment = getCommentById(Comment.class, UUID.fromString((String) args.get(Constants.FIELD_ID)));

@@ -103,7 +103,7 @@ public class Runner {
         }
     }
 
-    private Result runThirdLab (String method, HashMap args) {
+    public Result runThirdLab (String method, HashMap args) {
         try {
 
             String strategy = (String) args.get(Constants.FIELD_STRATEGY);

@@ -66,4 +66,10 @@ public class Constants {
     public static final String TABLE_PRESENTATION_LIST_COLLECTION = "presentation_list_collection";
     public static final String ENTITY_PRESENTATION_LIST_COLLECTION = "presentation_list_collection";
     public static final String TABLE_SLIDES_LIST_COLLECTION = "slide_list_collection";
+    public static final String TABLE_PRESENTATION_MAP_COLLECTION = "presentation_map_collection";
+    public static final String ENTITY_PRESENTATION_MAP_COLLECTION = "presentation_map_collection";
+
+    public static final String TABLE_SLIDES_MAP_COLLECTION = "slide_map_collection";
+    public static final String FIELD_SLIDE_NAME = "slide_name";
+    public static final String ENTITY_SLIDE_MAP_COLLECTION = "slide_map_collection";
 }

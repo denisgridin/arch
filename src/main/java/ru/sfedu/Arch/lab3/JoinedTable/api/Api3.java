@@ -93,6 +93,12 @@ public class Api3 implements IJoinedTableProvider {
         }
     }
 
+
+    /**
+     * Update comment
+     * @param comment - updated comment bean
+     * @return Result - result of execution
+     */
     @Override
     public Result updateComment(Comment comment) {
         try {
@@ -118,6 +124,11 @@ public class Api3 implements IJoinedTableProvider {
         }
     }
 
+    /**
+     * Delete comment
+     * @param comment - comment bean for removing
+     * @return Result - result of execution
+     */
     @Override
     public Result deleteComment(Comment comment) {
         try {
@@ -125,17 +136,23 @@ public class Api3 implements IJoinedTableProvider {
 
             Session session = this.getSession();
 
-            if (session != null) {
-                Transaction transaction = session.beginTransaction();
-                event.debug(1, String.format(Messages.DELETE_BEAN_FORMAT, comment));
-                session.delete(comment);
-                transaction.commit();
-                return new Result(Enums.STATUS.success, Messages.SUCCESS_BEAN_DELETED);
-            } else {
-                event.error(1, Messages.ERROR_GET_SESSION);
-                return new Result(Enums.STATUS.error, Messages.ERROR_GET_SESSION);
-            }
+            Result result = getCommentById(Comment.class, comment.getId());
 
+            if (result.getStatus() == Enums.STATUS.success) {
+                if (session != null) {
+                    Transaction transaction = session.beginTransaction();
+                    event.debug(1, String.format(Messages.DELETE_BEAN_FORMAT, comment));
+                    session.delete(comment);
+                    transaction.commit();
+                    return new Result(Enums.STATUS.success, Messages.SUCCESS_BEAN_DELETED);
+                } else {
+                    event.error(1, Messages.ERROR_GET_SESSION);
+                    return new Result(Enums.STATUS.error, Messages.ERROR_GET_SESSION);
+                }
+            } else {
+                event.error(1, Messages.ERROR_GET_BEAN);
+                return new Result(Enums.STATUS.error, Messages.ERROR_GET_BEAN);
+            }
         } catch (Exception error) {
             event.error(1, error);
             event.error(2, Messages.ERROR_REMOVE_BEAN);
@@ -143,6 +160,12 @@ public class Api3 implements IJoinedTableProvider {
         }
     }
 
+
+    /**
+     * Method of comment creation from cli
+     * @param args - HashMap of arguments
+     * @return Result - result of execution
+     */
     public Result buildAndSaveComment(HashMap args) {
         try {
             Comment comment = new Comment();
@@ -158,6 +181,12 @@ public class Api3 implements IJoinedTableProvider {
         }
     }
 
+
+    /**
+     * Method of comment updating from cli
+     * @param args - HashMap of arguments
+     * @return Result - result of execution
+     */
     public Result buildAndUpdateComment(HashMap args) {
         try {
             Result resultGetComment = getCommentById(Comment.class, UUID.fromString((String) args.get(Constants.FIELD_ID)));
@@ -179,6 +208,12 @@ public class Api3 implements IJoinedTableProvider {
         }
     }
 
+
+    /**
+     * Method of comment removing from cli
+     * @param args - HashMap of arguments
+     * @return Result - result of execution
+     */
     public Result buildAndDeleteComment(HashMap args) {
         try {
             Result resultGetComment = getCommentById(Comment.class, UUID.fromString((String) args.get(Constants.FIELD_ID)));

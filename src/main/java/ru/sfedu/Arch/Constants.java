@@ -63,4 +63,7 @@ public class Constants {
     public static final String FIELD_INDEX = "slide_index";
     public static final String ENTITY_SLIDE_SET_COLLECTION = "slide_set_collection";
     public static final String FIELD_SLIDES = "slides";
+    public static final String TABLE_PRESENTATION_LIST_COLLECTION = "presentation_list_collection";
+    public static final String ENTITY_PRESENTATION_LIST_COLLECTION = "presentation_list_collection";
+    public static final String TABLE_SLIDES_LIST_COLLECTION = "slide_list_collection";
 }

@@ -15,7 +15,6 @@ import ru.sfedu.Arch.utils.Messages;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.zip.CheckedOutputStream;
 
 
 public class ListCollectionApi extends EntityApi {
@@ -208,6 +207,13 @@ public class ListCollectionApi extends EntityApi {
         }
     }
 
+
+    /**
+     * Get slide by id
+     * @param slideId - Slide id
+     * @param presentationId - Presentation id
+     * @return Result - result of execution
+     */
     public Result getSlideById (UUID slideId, UUID presentationId) {
         try {
             Result resultGetPresentation = getPresentationById(presentationId);

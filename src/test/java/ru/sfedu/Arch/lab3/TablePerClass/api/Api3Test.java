@@ -11,22 +11,27 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class Api3Test {
 
+    private final Api3 instance = new Api3();
 
     Result addComment () {
-        Api3 instance = new Api3();
-
         Comment comment = new Comment();
-        comment.setRole(Enums.Role.editor);
+        comment.setRole(Enums.Role.guest);
         comment.setDatetime(String.valueOf(new Date(System.currentTimeMillis())));
-        comment.setText("test text");
+        comment.setText("Текст комментария");
         comment.setPresentationId(UUID.randomUUID());
         System.out.println(comment);
 
         return instance.saveComment(comment);
     }
 
+
+    /**
+     * TEST Save comment
+     * Type: Success
+     */
     @Test
     void saveCommentSuccess() {
         Result result = addComment();
@@ -37,7 +42,24 @@ class Api3Test {
         }
     }
 
+    /**
+     * TEST Save comment
+     * Type: Fail
+     */
+    @Test
+    void saveCommentFail() {
+        Comment comment = new Comment();
+        System.out.println(comment);
 
+        Result result = instance.saveComment(comment);
+        assertTrue(result.getStatus() == Enums.STATUS.error);
+    }
+
+
+    /**
+     * TEST Get comment by id
+     * Type: Success
+     */
     @Test
     void getCommentByIdSuccess() {
         Api3 instance = new Api3();
@@ -61,15 +83,27 @@ class Api3Test {
         }
     }
 
+
+    /**
+     * TEST Get comment by id
+     * Type: Fail
+     */
+    @Test
+    void getCommentByIdFail() {
+        Result result = instance.getCommentById(Comment.class, UUID.randomUUID());
+        assertTrue(result.getStatus() == Enums.STATUS.error);
+    }
+
+
+    /**
+     * TEST Update comment
+     * Type: Success
+     */
     @Test
     void updateComment() {
-        Api3 instance = new Api3();
-
         Result result = addComment();
-
         if (result.getStatus() == Enums.STATUS.success) {
             UUID id = (UUID) result.getReturnValue();
-
             Result resultGetComment = instance.getCommentById(Comment.class, id);
 
             if (resultGetComment.getStatus() == Enums.STATUS.success) {
@@ -114,6 +148,21 @@ class Api3Test {
         }
     }
 
+    /**
+     * TEST Update comment
+     * Type: Fail
+     */
+    @Test
+    void updateCommentFail () {
+        Result result = instance.updateComment(new Comment());
+        assertTrue(result.getStatus() == Enums.STATUS.error);
+    }
+
+
+    /**
+     * TEST Delete comment
+     * Type: Success
+     */
     @Test
     void deleteComment() {
         Result result = addComment();
@@ -148,5 +197,16 @@ class Api3Test {
         } else {
             fail();
         }
+    }
+
+
+    /**
+     * TEST Delete comment
+     * Type: Fail
+     */
+    @Test
+    void deleteCommentFail () {
+        Result result = instance.deleteComment(new Comment());
+        assertTrue(result.getStatus() == Enums.STATUS.error);
     }
 }

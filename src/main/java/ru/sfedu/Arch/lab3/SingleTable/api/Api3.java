@@ -137,17 +137,23 @@ public class Api3 implements ISingleTableProvider {
 
             Session session = this.getSession();
 
-            if (session != null) {
-                Transaction transaction = session.beginTransaction();
-                event.debug(1, String.format(Messages.DELETE_BEAN_FORMAT, comment));
-                session.delete(comment);
-                transaction.commit();
-                return new Result(Enums.STATUS.success, Messages.SUCCESS_BEAN_DELETED);
-            } else {
-                event.error(1, Messages.ERROR_GET_SESSION);
-                return new Result(Enums.STATUS.error, Messages.ERROR_GET_SESSION);
-            }
+            Result result = getCommentById(Comment.class, comment.getId());
 
+            if (result.getStatus() == Enums.STATUS.success) {
+                if (session != null) {
+                    Transaction transaction = session.beginTransaction();
+                    event.debug(1, String.format(Messages.DELETE_BEAN_FORMAT, comment));
+                    session.delete(comment);
+                    transaction.commit();
+                    return new Result(Enums.STATUS.success, Messages.SUCCESS_BEAN_DELETED);
+                } else {
+                    event.error(1, Messages.ERROR_GET_SESSION);
+                    return new Result(Enums.STATUS.error, Messages.ERROR_GET_SESSION);
+                }
+            } else {
+                event.error(1, Messages.ERROR_GET_BEAN);
+                return new Result(Enums.STATUS.error, Messages.ERROR_GET_BEAN);
+            }
         } catch (Exception error) {
             event.error(1, error);
             event.error(2, Messages.ERROR_REMOVE_BEAN);

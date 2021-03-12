@@ -24,13 +24,13 @@ public class Presentation implements Serializable {
     @Type(type = "uuid-char")
     private UUID id;
 
-    @Column(name = Constants.FIELD_NAME)
+    @Column(name = Constants.FIELD_NAME, nullable = false)
     private String name;
 
-    @Column(name = Constants.FIELD_FILL_COLOR)
+    @Column(name = Constants.FIELD_FILL_COLOR, nullable = false)
     private String fillColor;
 
-    @Column(name = Constants.FIELD_FONT_FAMILY)
+    @Column(name = Constants.FIELD_FONT_FAMILY, nullable = false)
     private String fontFamily;
 
     @ElementCollection

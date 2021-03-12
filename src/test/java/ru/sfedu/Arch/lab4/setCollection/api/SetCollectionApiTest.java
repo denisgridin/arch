@@ -72,7 +72,10 @@ class SetCollectionApiTest {
         assertTrue(result.getStatus() == Enums.STATUS.error);
     }
 
-
+    /**
+     * Getting presentation by id
+     * Type: Success
+     */
     @Test
     void getPresentationByIdSuccess() {
 

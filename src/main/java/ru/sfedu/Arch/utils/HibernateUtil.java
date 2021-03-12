@@ -70,6 +70,9 @@ public class HibernateUtil {
             metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab3.TablePerClass.model.Comment.class); // TablePerClass
             metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab3.SingleTable.model.Comment.class); // SingleTable
             metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab3.JoinedTable.model.Comment.class); // JoinedTable
+
+            metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab4.setCollection.model.Presentation.class);
+            metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab4.setCollection.model.Slide.class);
         } catch (Exception e) {
             log.error(Messages.ERROR_ADD_ENTITIES);
         }

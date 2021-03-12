@@ -52,4 +52,15 @@ public class Constants {
     public static final String ENTITY_FEEDBACK_JOINED_TABLE = "FeedbackJoinedTable";
     public static final String FIELD_STRATEGY = "strategy";
     public static final String FIELD_ROLE = "role";
+    public static final String ENTITY_PRESENTATION = "presentation_set_collection";
+    public static final String TABLE_PRESENTATION_SET_COLLECTION = "presentation_set_collection";
+    public static final String FIELD_FILL_COLOR = "fill_color";
+    public static final String FIELD_FONT_FAMILY = "font_family";
+    public static final String TABLE_SLIDES = "slides";
+    public static final String FIELD_SLIDE_ID = "slide_id";
+    public static final String ENTITY_SLIDE = "slide";
+    public static final String TABLE_SLIDES_SET_COLLECTION = "slide_set_collection";
+    public static final String FIELD_INDEX = "slide_index";
+    public static final String ENTITY_SLIDE_SET_COLLECTION = "slide_set_collection";
+    public static final String FIELD_SLIDES = "slides";
 }

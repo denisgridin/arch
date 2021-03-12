@@ -7,8 +7,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import ru.sfedu.Arch.Enums;
 import ru.sfedu.Arch.Result;
-import ru.sfedu.Arch.lab3.TablePerClass.api.Api3;
-import ru.sfedu.Arch.lab3.TablePerClass.model.Comment;
 import ru.sfedu.Arch.utils.EventWrapper;
 import ru.sfedu.Arch.utils.HibernateUtil;
 import ru.sfedu.Arch.utils.Messages;
@@ -18,7 +16,7 @@ import java.util.UUID;
 
 public class EntityApi {
 
-    private static final Logger logger = LogManager.getLogger(Api3.class);
+    private static final Logger logger = LogManager.getLogger(EntityApi.class);
     private static final EventWrapper event = new EventWrapper(logger);
 
 
@@ -26,7 +24,7 @@ public class EntityApi {
      * Connect to Hibernate and connect to session
      * @return Session object or null value
      */
-    private Session getSession () {
+    public Session getSession () {
         try {
             event.info(1, Messages.GET_HIBERNATE_SESSION);
             SessionFactory sessionFactory = HibernateUtil.getSessionFactory();

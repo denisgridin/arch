@@ -1,5 +1,7 @@
 package ru.sfedu.Arch.utils;
 
+import java.util.Locale;
+
 public class Messages {
     public static final String SCHEMAS_SIZE = "Database schemas size: %s";
     public static final String NO_SCHEMAS_SIZE = "No schemas size!";
@@ -40,4 +42,13 @@ public class Messages {
     public static final String SUCCESS_BEAN_DELETED = "Bean successfully removed";
     public static final String ERROR_REMOVE_BEAN = "Unable to remove bean";
     public static final String ERROR_GET_BEAN = "Unable to get bean";
+    public static final String ERROR_PRESENTATION_SAVE = "Unable to save presentation";
+    public static final String ERROR_GET_PRESENTATION = "Unable to get presentation";
+    public static final String ERROR_SLIDE_SAVE = "Unable to save slide";
+    public static final String ERROR_GET_SLIDE = "Unable to get slide";
+    public static final String PRESENTATION_FOUND = "Presentation found: {}";
+    public static final String SET_FIELD = "Set field: %s = %s";
+    public static final String SUCCESS_SLIDES_ADDED = "Presentation slides added";
+    public static final String ERROR_ADD_SLIDES = "Unable to add slides";
+    public static final String ERROR_PRESENTATION_GET = "Unable to find presentation";
 }

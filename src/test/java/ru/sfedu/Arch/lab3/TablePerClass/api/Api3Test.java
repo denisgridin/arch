@@ -3,6 +3,7 @@ package ru.sfedu.Arch.lab3.TablePerClass.api;
 import org.junit.jupiter.api.Test;
 import ru.sfedu.Arch.Enums;
 import ru.sfedu.Arch.Result;
+import ru.sfedu.Arch.lab3.TablePerClass.model.Assessment;
 import ru.sfedu.Arch.lab3.TablePerClass.model.Comment;
 
 import java.sql.Date;
@@ -26,6 +27,18 @@ class Api3Test {
 
         return instance.saveComment(comment);
     }
+
+    Result addAssessment () {
+        Assessment assessment = new Assessment();
+        assessment.setRole(Enums.Role.editor);
+        assessment.setPresentationId(UUID.randomUUID());
+        assessment.setMark(Enums.Mark.excellent);
+
+
+        System.out.println(assessment);
+        return instance.saveAssessment(assessment);
+    }
+
 
 
     /**
@@ -207,6 +220,190 @@ class Api3Test {
     @Test
     void deleteCommentFail () {
         Result result = instance.deleteComment(new Comment());
+        assertTrue(result.getStatus() == Enums.STATUS.error);
+    }
+
+
+
+
+    /*               Assessments section               */
+
+
+    /**
+     * TEST Save comment
+     * Type: Success
+     */
+    @Test
+    void saveAssessmentsSuccess() {
+        Result result = addAssessment();
+        if (result.getStatus() == Enums.STATUS.success) {
+            assertNotNull(result.getReturnValue());
+        } else {
+            fail();
+        }
+    }
+
+    /**
+     * TEST Save comment
+     * Type: Fail
+     */
+    @Test
+    void saveAssessmentFail() {
+        Assessment assessment = new Assessment();
+        System.out.println(assessment);
+
+        Result result = instance.saveAssessment(assessment);
+        assertTrue(result.getStatus() == Enums.STATUS.error);
+    }
+
+
+    /**
+     * TEST Get comment by id
+     * Type: Success
+     */
+    @Test
+    void getAssessmentByIdSuccess() {
+
+        Result result = addAssessment();
+
+        if (result.getStatus() == Enums.STATUS.success) {
+            UUID id = (UUID) result.getReturnValue();
+
+            Result resultGetAssessment = instance.getAssessmentById(Assessment.class, id);
+
+            if (resultGetAssessment.getStatus() == Enums.STATUS.success) {
+                Optional<Assessment> optionalAssessment = (Optional<Assessment>) resultGetAssessment.getReturnValue();
+                System.out.println(optionalAssessment);
+                assertTrue(optionalAssessment.isPresent());
+            } else {
+                fail();
+            }
+        } else {
+            fail();
+        }
+    }
+
+
+    /**
+     * TEST Get comment by id
+     * Type: Fail
+     */
+    @Test
+    void getAssessmentByIdFail() {
+        Result result = instance.getAssessmentById(Assessment.class, UUID.randomUUID());
+        assertTrue(result.getStatus() == Enums.STATUS.error);
+    }
+
+
+    /**
+     * TEST Update comment
+     * Type: Success
+     */
+    @Test
+    void updateAssessmentSuccess() {
+        Result result = addAssessment();
+        if (result.getStatus() == Enums.STATUS.success) {
+            UUID id = (UUID) result.getReturnValue();
+            Result resultGetAssessment = instance.getAssessmentById(Assessment.class, id);
+
+            if (resultGetAssessment.getStatus() == Enums.STATUS.success) {
+                Optional<Assessment> optionalAssessment = (Optional<Assessment>) resultGetAssessment.getReturnValue();
+
+                if (optionalAssessment.isPresent()) {
+                    Assessment assessment = optionalAssessment.get();
+
+                    Enums.Mark mark = Enums.Mark.bad;
+
+                    assessment.setMark(mark);
+                    Result resultUpdateAssessment = instance.updateAssessment(assessment);
+
+                    assertTrue(resultUpdateAssessment.getStatus() == Enums.STATUS.success);
+
+
+                    Result resultGetUpdatedAssessment = instance.getAssessmentById(Assessment.class, id);
+
+                    if (resultGetUpdatedAssessment.getStatus() == Enums.STATUS.success) {
+                        Optional<Assessment> optionalUpdatedAssessment = (Optional<Assessment>) resultGetUpdatedAssessment.getReturnValue();
+
+                        if (optionalUpdatedAssessment.isPresent()) {
+                            Assessment updatedAssessment = optionalUpdatedAssessment.get();
+
+                            assertEquals(updatedAssessment.getMark(), mark);
+                        } else {
+                            fail();
+                        }
+                    } else {
+                        fail();
+                    }
+
+                } else {
+                    fail();
+                }
+            } else {
+                fail();
+            }
+        }
+    }
+
+    /**
+     * TEST Update comment
+     * Type: Fail
+     */
+    @Test
+    void updateAssessmentFail () {
+        Result result = instance.updateAssessment(new Assessment());
+        assertTrue(result.getStatus() == Enums.STATUS.error);
+    }
+
+
+    /**
+     * TEST Delete comment
+     * Type: Success
+     */
+    @Test
+    void deleteAssessment() {
+        Result result = addAssessment();
+
+        if (result.getStatus() == Enums.STATUS.success) {
+            UUID id = (UUID) result.getReturnValue();
+
+            if (id != null) {
+                Api3 instance = new Api3();
+
+                Result resultGetAssessment = instance.getAssessmentById(Assessment.class, id);
+
+                if (resultGetAssessment.getStatus() == Enums.STATUS.success) {
+                    Optional<Assessment> optionalAssessment = (Optional<Assessment>) resultGetAssessment.getReturnValue();
+                    if (optionalAssessment.isPresent()) {
+                        Assessment assessment = optionalAssessment.get();
+                        Result resultDeleteAssessment = instance.deleteAssessment(assessment);
+
+                        assertTrue(resultDeleteAssessment.getStatus() == Enums.STATUS.success);
+
+                        Result resultGetRemovedAssessment = instance.getAssessmentById(Assessment.class, id);
+                        assertTrue(resultGetRemovedAssessment.getStatus() == Enums.STATUS.error);
+                    } else {
+                        fail();
+                    }
+                } else {
+                    fail();
+                }
+            } else {
+                fail();
+            }
+        } else {
+            fail();
+        }
+    }
+
+
+    /**
+     * TEST Delete comment
+     * Type: Fail
+     */
+    @Test
+    void deleteAssessmentFail () {
+        Result result = instance.deleteAssessment(new Assessment());
         assertTrue(result.getStatus() == Enums.STATUS.error);
     }
 }

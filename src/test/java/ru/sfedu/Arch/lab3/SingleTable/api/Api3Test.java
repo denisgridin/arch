@@ -271,7 +271,7 @@ class Api3Test {
             Result resultGetAssessment = instance.getAssessmentById(Assessment.class, id);
 
             if (resultGetAssessment.getStatus() == Enums.STATUS.success) {
-                Optional<Comment> optionalAssessment = (Optional<Comment>) resultGetAssessment.getReturnValue();
+                Optional<Assessment> optionalAssessment = (Optional<Assessment>) resultGetAssessment.getReturnValue();
                 System.out.println(optionalAssessment);
                 assertTrue(optionalAssessment.isPresent());
             } else {

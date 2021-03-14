@@ -7,18 +7,19 @@ import ru.sfedu.Arch.Enums;
 import javax.persistence.*;
 import java.util.UUID;
 
-@Entity(name = Constants.ENTITY_FEEDBACK)
+@Entity(name = Constants.ENTITY_FEEDBACK_TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Feedback {
     private Enums.Role role;
 
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = Constants.FIELD_ID, columnDefinition="uniqueidentifier")
+    @Column(name = Constants.FIELD_ID, columnDefinition="uniqueidentifier", nullable = false)
     @Type(type = "uuid-char")
     private UUID id;
 
-    @Column(name = Constants.FIELD_PRESENTATION_ID, columnDefinition="uniqueidentifier")
+    @Column(name = Constants.FIELD_PRESENTATION_ID, columnDefinition="uniqueidentifier", nullable = false)
     @Type(type = "uuid-char")
     private UUID presentationId;
 

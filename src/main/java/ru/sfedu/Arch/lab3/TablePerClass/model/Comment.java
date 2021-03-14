@@ -11,7 +11,7 @@ import java.util.Objects;
 
 
 @Entity(name = Constants.ENTITY_COMMENT_TABLE_PER_CLASS)
-@Table(name = Constants.TABLE_COMMENTS)
+@Table(name = Constants.TABLE_COMMENTS_TABLE_PER_CLASS)
 public class Comment extends Feedback implements Serializable {
 
     public Comment () {}

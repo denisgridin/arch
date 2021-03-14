@@ -79,4 +79,8 @@ public class Constants {
     public static final String ENTITY_ASSESSMENT_MAPPED_SUPER_CLASS = "assessment_mapped_superclass";
     public static final String TABLE_ASSESSMENT_SINGE_TABLE = "assessment_single_table";
     public static final String ENTITY_ASSESSMENT_SINGLE_TABLE = "assessment_single_table";
+    public static final String TABLE_ASSESSMENT_TABLE_PER_CLASS = "assessment_table_per_class";
+    public static final String ENTITY_ASSESSMENT_TABLE_PER_CLASS_TABLE = "assessment_table_per_class";
+    public static final String TABLE_COMMENTS_TABLE_PER_CLASS = "comment_table_per_class";
+    public static final String ENTITY_FEEDBACK_TABLE_PER_CLASS = "feedback_table_per_class";
 }

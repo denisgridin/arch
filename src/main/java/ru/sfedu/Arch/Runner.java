@@ -249,6 +249,18 @@ public class Runner {
                 case deleteComment: {
                     return api3.buildAndDeleteComment(args);
                 }
+                case saveAssessment: {
+                    return api3.buildAndSaveAssessment(args);
+                }
+                case getAssessmentById: {
+                    return api3.getAssessmentById(ru.sfedu.Arch.lab3.SingleTable.model.Assessment.class, UUID.fromString((String) args.get(Constants.FIELD_ID)));
+                }
+                case updateAssessment: {
+                    return api3.buildAndUpdateAssessment(args);
+                }
+                case deleteAssessment: {
+                    return api3.buildAndDeleteAssessment(args);
+                }
                 default: {
                     return new Result(Enums.STATUS.error, Messages.ERROR_METHOD_RUN);
                 }

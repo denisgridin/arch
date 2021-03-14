@@ -17,11 +17,11 @@ public abstract class Feedback {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = Constants.FIELD_ID, columnDefinition="uniqueidentifier")
+    @Column(name = Constants.FIELD_ID, columnDefinition="uniqueidentifier", nullable = false)
     @Type(type = "uuid-char")
     private UUID id;
 
-    @Column(name = Constants.FIELD_PRESENTATION_ID, columnDefinition="uniqueidentifier")
+    @Column(name = Constants.FIELD_PRESENTATION_ID, columnDefinition="uniqueidentifier", nullable = false)
     @Type(type = "uuid-char")
     private UUID presentationId;
 

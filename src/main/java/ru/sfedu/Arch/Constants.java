@@ -77,4 +77,6 @@ public class Constants {
     public static final String FIELD_MARK = "mark";
     public static final String TABLE_ASSESSMENT_MAPPED_SUPER_CLASS = "assessment_mapped_superclass";
     public static final String ENTITY_ASSESSMENT_MAPPED_SUPER_CLASS = "assessment_mapped_superclass";
+    public static final String TABLE_ASSESSMENT_SINGE_TABLE = "assessment_single_table";
+    public static final String ENTITY_ASSESSMENT_SINGLE_TABLE = "assessment_single_table";
 }

@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import ru.sfedu.Arch.Constants;
 import ru.sfedu.Arch.Enums;
 import ru.sfedu.Arch.Result;
+import ru.sfedu.Arch.lab3.SingleTable.model.Assessment;
 import ru.sfedu.Arch.lab3.SingleTable.model.Comment;
 import ru.sfedu.Arch.providers.ISingleTableProvider;
 import ru.sfedu.Arch.utils.EventWrapper;
@@ -223,6 +224,127 @@ public class Api3 implements ISingleTableProvider {
                 Comment comment = optionalComment.get();
                 return deleteComment(comment);
             } else {
+                return new Result(Enums.STATUS.error, Messages.ERROR_GET_BEAN);
+            }
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_REMOVE_BEAN);
+            return new Result(Enums.STATUS.error, Messages.ERROR_REMOVE_BEAN);
+        }
+    }
+
+
+
+    /*                Assessments section                */
+
+    /**
+     * Save assessment bean in data source
+     * @param assessment Entity bean for data source
+     * @return Result - result of execution
+     */
+    @Override
+    public Result saveAssessment (Assessment assessment) {
+        try {
+            event.info(1, Messages.SAVE_BEAN);
+            Session session = this.getSession();
+            event.debug(1, Messages.BEGIN_TRANSACTION);
+            Transaction transaction = session.beginTransaction();
+            UUID id = (UUID) session.save(assessment);
+            event.debug(2, String.format(Messages.COMMIT_BEAN, id));
+            transaction.commit();
+            return new Result(Enums.STATUS.success, id);
+        } catch (Exception e) {
+            event.error(1, e);
+            event.error(2, Messages.ERROR_SAVE_BEAN);
+            return new Result(Enums.STATUS.error, Messages.ERROR_SAVE_BEAN);
+        }
+    }
+
+
+    /**
+     * Get comment bean by id from data source
+     * @param comment Class of entity
+     * @param id identifier of searching entity
+     * @return Optional - optional comment element
+     */
+    @Override
+    public Result getAssessmentById(Class<Assessment> comment, UUID id) {
+        try {
+            event.info(1, Messages.FIND_ENTITY_BY_ID);
+            Session session = this.getSession();
+            Assessment item = session.get(comment, id);
+            event.debug(1, String.format(Messages.ENTITY_FOUND, item));
+            session.close();
+            if (item != null) {
+                return new Result(Enums.STATUS.success, Optional.of(item));
+            } else {
+                return new Result(Enums.STATUS.error, Messages.ERROR_GET_BEAN);
+            }
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_GET_ENTITY_BY_ID);
+            return new Result(Enums.STATUS.error, Messages.ERROR_GET_ENTITY_BY_ID);
+        }
+    }
+
+
+    /**
+     * Update assessment
+     * @param assessment - updated assessment bean
+     * @return Result - result of execution
+     */
+    @Override
+    public Result updateAssessment(Assessment assessment) {
+        try {
+            event.info(1, Messages.UPDATE_BEAN);
+
+            Session session = this.getSession();
+
+            if (session != null) {
+                Transaction transaction = session.beginTransaction();
+                event.debug(1, String.format(Messages.UPDATE_BEAN_FORMAT, assessment));
+                session.update(assessment);
+                transaction.commit();
+                return new Result(Enums.STATUS.success, Messages.SUCCESS_BEAN_UPDATED);
+            } else {
+                event.error(1, Messages.ERROR_GET_SESSION);
+                return new Result(Enums.STATUS.error, Messages.ERROR_GET_SESSION);
+            }
+
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_UPDATE_BEAN);
+            return new Result(Enums.STATUS.error, Messages.ERROR_UPDATE_BEAN);
+        }
+    }
+
+    /**
+     * Delete assessment
+     * @param assessment - assessment bean for removing
+     * @return Result - result of execution
+     */
+    @Override
+    public Result deleteAssessment(Assessment assessment) {
+        try {
+            event.info(1, Messages.UPDATE_BEAN);
+
+            Session session = this.getSession();
+
+            Result result = getAssessmentById(Assessment.class, assessment.getId());
+
+            if (result.getStatus() == Enums.STATUS.success) {
+                if (session != null) {
+                    Transaction transaction = session.beginTransaction();
+                    event.debug(1, String.format(Messages.DELETE_BEAN_FORMAT, assessment));
+                    session.delete(assessment);
+                    transaction.commit();
+                    return new Result(Enums.STATUS.success, Messages.SUCCESS_BEAN_DELETED);
+                } else {
+                    event.error(1, Messages.ERROR_GET_SESSION);
+                    return new Result(Enums.STATUS.error, Messages.ERROR_GET_SESSION);
+                }
+            } else {
+                event.error(1, Messages.ERROR_GET_BEAN);
                 return new Result(Enums.STATUS.error, Messages.ERROR_GET_BEAN);
             }
         } catch (Exception error) {

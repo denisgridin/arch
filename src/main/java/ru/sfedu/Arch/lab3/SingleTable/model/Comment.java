@@ -16,10 +16,10 @@ public class Comment extends Feedback implements Serializable {
 
     public Comment () {}
 
-    @Column(name = Constants.FIELD_TEXT, nullable = false)
+    @Column(name = Constants.FIELD_TEXT)
     private String text;
 
-    @Column(name = Constants.FIELD_DATETIME, nullable = false)
+    @Column(name = Constants.FIELD_DATETIME)
     private String datetime;
 
     public String getText() {

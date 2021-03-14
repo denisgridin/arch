@@ -353,4 +353,79 @@ public class Api3 implements IMappedSuperclassProvider {
             return new Result(Enums.STATUS.error, Messages.ERROR_REMOVE_BEAN);
         }
     }
+
+    /**
+     * Method of assessment creation from cli
+     * @param args - HashMap of arguments
+     * @return Result - result of execution
+     */
+    public Result buildAndSaveAssessment(HashMap args) {
+        try {
+            event.info(1, String.format(Messages.METHOD_RUN, "buildAndSaveAssessment"));
+            Assessment assessment = new Assessment();
+            event.debug(1, Messages.BUILD_BEAN);
+            assessment.setRole(Enums.Role.valueOf((String) args.get(Constants.FIELD_ROLE)));
+            assessment.setMark(Enums.Mark.valueOf((String) args.get(Constants.FIELD_MARK)));
+            assessment.setPresentationId(UUID.fromString((String) args.get(Constants.FIELD_PRESENTATION_ID)));
+            event.debug(1, assessment);
+
+            return this.saveAssessment(assessment);
+        } catch (Exception error) {
+            event.error(1, error);
+            return new Result(Enums.STATUS.error, error);
+        }
+    }
+
+
+    /**
+     * Method of assessment updating from cli
+     * @param args - HashMap of arguments
+     * @return Result - result of execution
+     */
+    public Result buildAndUpdateAssessment(HashMap args) {
+        try {
+            Result resultGetAssessment = getAssessmentById(Assessment.class, UUID.fromString((String) args.get(Constants.FIELD_ID)));
+            if (resultGetAssessment.getStatus() == Enums.STATUS.success) {
+                Optional<Assessment> optionalAssessment = (Optional<Assessment>) resultGetAssessment.getReturnValue();
+                Assessment assessment = optionalAssessment.get();
+                event.info(1, String.format(Messages.ENTITY_FOUND, assessment));
+
+                assessment.setPresentationId(UUID.fromString(String.valueOf(args.getOrDefault(Constants.FIELD_PRESENTATION_ID, assessment.getPresentationId()))));
+                assessment.setRole(Enums.Role.valueOf(String.valueOf(args.getOrDefault(Constants.FIELD_ROLE, assessment.getRole()))));
+                assessment.setMark(Enums.Mark.valueOf(String.valueOf(args.getOrDefault(Constants.FIELD_MARK, assessment.getMark()))));
+
+                return updateAssessment(assessment);
+            } else {
+                event.error(1, Messages.ERROR_GET_BEAN);
+                return new Result(Enums.STATUS.error, Messages.ERROR_GET_BEAN);
+            }
+
+        } catch (Exception error) {
+            event.error(1, error);
+            return new Result(Enums.STATUS.error, Messages.ERROR_METHOD_RUN);
+        }
+    }
+
+
+    /**
+     * Method of assessment removing from cli
+     * @param args - HashMap of arguments
+     * @return Result - result of execution
+     */
+    public Result buildAndDeleteAssessment(HashMap args) {
+        try {
+            Result resultGetAssessment = getAssessmentById(Assessment.class, UUID.fromString((String) args.get(Constants.FIELD_ID)));
+            if (resultGetAssessment.getStatus() == Enums.STATUS.success) {
+                Optional<Assessment> optionalAssessment = (Optional<Assessment>) resultGetAssessment.getReturnValue();
+                Assessment assessment = optionalAssessment.get();
+                return deleteAssessment(assessment);
+            } else {
+                return new Result(Enums.STATUS.error, Messages.ERROR_GET_BEAN);
+            }
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_REMOVE_BEAN);
+            return new Result(Enums.STATUS.error, Messages.ERROR_REMOVE_BEAN);
+        }
+    }
 }

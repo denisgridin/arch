@@ -20,7 +20,11 @@ public class Enums {
         saveComment,
         getCommentById,
         updateComment,
-        deleteComment
+        deleteComment,
+        saveAssessment,
+        getAssessmentById,
+        updateAssessment,
+        deleteAssessment
     };
 
     public enum Mark {

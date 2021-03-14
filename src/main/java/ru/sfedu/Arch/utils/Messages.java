@@ -55,4 +55,6 @@ public class Messages {
     public static final String SUCCESS_SLIDE_REMOVED = "Slide successfully removed";
     public static final String ERROR_SLIDE_UPDATE = "Unable to update slide";
     public static final String SUCCESS_SLIDE_UPDATED = "Slide successfully updated";
+    public static final String METHOD_RUN = "Run method: %s";
+    public static final String BUILD_BEAN = "Build bean";
 }

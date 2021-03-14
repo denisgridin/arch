@@ -184,6 +184,7 @@ public class Runner {
         try {
             Enums.METHODS_LAB_3 function = Enums.METHODS_LAB_3.valueOf(method);
             ru.sfedu.Arch.lab3.JoinedTable.api.Api3 api3 = new ru.sfedu.Arch.lab3.JoinedTable.api.Api3();
+            log.debug(String.format(Messages.METHOD_RUN, function));
             switch (function) {
                 case saveComment: {
                     return api3.buildAndSaveComment(args);
@@ -196,6 +197,18 @@ public class Runner {
                 }
                 case deleteComment: {
                     return api3.buildAndDeleteComment(args);
+                }
+                case saveAssessment: {
+                    return api3.buildAndSaveAssessment(args);
+                }
+                case getAssessmentById: {
+                    return api3.getAssessmentById(ru.sfedu.Arch.lab3.JoinedTable.model.Assessment.class, UUID.fromString((String) args.get(Constants.FIELD_ID)));
+                }
+                case updateAssessment: {
+                    return api3.buildAndUpdateAssessment(args);
+                }
+                case deleteAssessment: {
+                    return api3.buildAndDeleteAssessment(args);
                 }
                 default: {
                     return new Result(Enums.STATUS.error, Messages.ERROR_METHOD_RUN);

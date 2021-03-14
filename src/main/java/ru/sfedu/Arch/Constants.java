@@ -75,4 +75,6 @@ public class Constants {
     public static final String ENTITY_ASSESSMENT_JOINED_TABLE = "assessment_joined_table";
     public static final String TABLE_ASSESSMENT_JOINED = "assessment_joined_table";
     public static final String FIELD_MARK = "mark";
+    public static final String TABLE_ASSESSMENT_MAPPED_SUPER_CLASS = "assessment_mapped_superclass";
+    public static final String ENTITY_ASSESSMENT_MAPPED_SUPER_CLASS = "assessment_mapped_superclass";
 }

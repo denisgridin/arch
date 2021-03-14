@@ -16,12 +16,6 @@ import java.util.UUID;
 @Table(name = Constants.TABLE_SLIDES_MAP_COLLECTION)
 public class Slide implements Serializable {
 
-//    @Id
-//    @GeneratedValue(generator = "UUID")
-//    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-//    @Column(name = Constants.FIELD_ID, columnDefinition="uniqueidentifier")
-//    @Type(type = "uuid-char")
-//    private UUID id;
 
     @Column(name = Constants.FIELD_NAME)
     private String name;

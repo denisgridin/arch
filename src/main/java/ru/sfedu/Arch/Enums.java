@@ -23,6 +23,14 @@ public class Enums {
         deleteComment
     };
 
+    public enum Mark {
+        awful,
+        bad,
+        normal,
+        good,
+        excellent
+    }
+
     public enum LAB {
         LAB1,
         LAB2,

@@ -34,13 +34,6 @@ public class Presentation implements Serializable {
     private String fontFamily;
 
     @ElementCollection
-//    @CollectionTable(
-//            name = Constants.TABLE_SLIDES_MAP_COLLECTION,
-//            joinColumns = {
-//                    @JoinColumn(name = Constants.FIELD_PRESENTATION_ID, referencedColumnName = Constants.FIELD_ID),
-//                    @JoinColumn(name = Constants.FIELD_SLIDE_NAME, referencedColumnName = Constants.FIELD_NAME)
-//            }
-//    )
     @MapKeyColumn(name = Constants.FIELD_ID)
     @Column(name = Constants.FIELD_NAME)
     private Map<String, String> slides = new HashMap<String, String>();

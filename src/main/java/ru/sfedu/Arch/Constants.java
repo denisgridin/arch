@@ -72,4 +72,7 @@ public class Constants {
     public static final String TABLE_SLIDES_MAP_COLLECTION = "slide_map_collection";
     public static final String FIELD_SLIDE_NAME = "slide_name";
     public static final String ENTITY_SLIDE_MAP_COLLECTION = "slide_map_collection";
+    public static final String ENTITY_ASSESSMENT_JOINED_TABLE = "assessment_joined_table";
+    public static final String TABLE_ASSESSMENT_JOINED = "assessment_joined_table";
+    public static final String FIELD_MARK = "mark";
 }

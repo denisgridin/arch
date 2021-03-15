@@ -23,16 +23,16 @@ public class Constants {
 
     public static final String FIELD_ID = "id";
     public static final String FIELD_NAME = "entityName";
-    public static final String FIELD_DESCRIPTION = "descriptionData";
-    public static final String FIELD_DATE_CREATED = "dateCreated";
-    public static final String FIELD_CHECK = "isCheck";
+    public static final String FIELD_DESCRIPTION = "description_data";
+    public static final String FIELD_DATE_CREATED = "date_created";
+    public static final String FIELD_CHECK = "is_check";
 
 
-    public static final String FIELD_SPECIALIZATION_NAME = "specializationName";
-    public static final String FIELD_SPECIALIZATION_YEARS = "specializationYears";
-    public static final String FIELD_SPECIALIZATION_LEVEL = "specializationLevel";
+    public static final String FIELD_SPECIALIZATION_NAME = "specialization_name";
+    public static final String FIELD_SPECIALIZATION_YEARS = "specialization_years";
+    public static final String FIELD_SPECIALIZATION_LEVEL = "specialization_level";
 
-    public static final String FIELD_PRESENTATION_ID = "presentationId";
+    public static final String FIELD_PRESENTATION_ID = "presentation_id";
     public static final String FIELD_TEXT = "text";
     public static final String FIELD_DATETIME = "datetime";
 
@@ -83,4 +83,5 @@ public class Constants {
     public static final String ENTITY_ASSESSMENT_TABLE_PER_CLASS_TABLE = "assessment_table_per_class";
     public static final String TABLE_COMMENTS_TABLE_PER_CLASS = "comment_table_per_class";
     public static final String ENTITY_FEEDBACK_TABLE_PER_CLASS = "feedback_table_per_class";
+    public static final String FIELD_PRESENTATION = "presentation";
 }

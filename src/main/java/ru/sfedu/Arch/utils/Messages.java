@@ -57,4 +57,10 @@ public class Messages {
     public static final String SUCCESS_SLIDE_UPDATED = "Slide successfully updated";
     public static final String METHOD_RUN = "Run method: %s";
     public static final String BUILD_BEAN = "Build bean";
+    public static final String ATTEMPT_SAVE_PRESENTATION = "Attempt to save presentation ";
+    public static final String ERROR_UNABLE_COLLECTION_STRATEGY = "Undefined collection mapping strategy";
+    public static final String ATTEMPT_GET_PRESENTATION = "Attempt to get presentation";
+    public static final String ERROR_FIELD_NOT_SET = "Field not set: %s";
+    public static final String ATTEMPT_ADD_SLIDE = "Attempt to add slide";
+    public static final String FIELD_SLIDE = "Slide: ";
 }

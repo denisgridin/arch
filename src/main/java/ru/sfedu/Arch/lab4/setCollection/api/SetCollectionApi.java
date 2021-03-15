@@ -29,6 +29,7 @@ public class SetCollectionApi extends EntityApi {
      */
     public Result savePresentation (Presentation presentation) {
         try {
+            event.info(1, presentation);
             return saveBean(presentation);
         } catch (Exception error) {
             event.error(1, error);
@@ -73,10 +74,11 @@ public class SetCollectionApi extends EntityApi {
 
                     Transaction transaction = session.beginTransaction();
                     Set<Slide> slideSet = presentation.getSlides();
+                    event.debug(2, String.format(Messages.FIELD_SLIDE, slide));
                     slideSet.add(slide);
                     presentation.setSlides(slideSet);
                     session.merge(presentation);
-                    event.debug(2, String.format(Messages.SET_FIELD, Constants.FIELD_SLIDES, presentation.getSlides()));
+                    event.debug(3, String.format(Messages.SET_FIELD, Constants.FIELD_SLIDES, presentation.getSlides()));
                     transaction.commit();
 
                     return new Result(Enums.STATUS.success, Messages.SUCCESS_SLIDES_ADDED);

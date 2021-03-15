@@ -51,3 +51,29 @@ id=aa50e2f7-e8de-46bc-b4f8-c0f2ead0af76
 strategy=MAPPED_SUPERCLASS
 role=guest
 text="Edited Comment text"
+
+
+LAB3
+getAssessmentById
+strategy=TABLE_PER_CLASS
+role=guest
+mark=good
+presentationId=b01bd9ac-84f0-11eb-8dcd-0242ac130003
+id=59bced03-6d37-4a27-9313-cbea4567d1b8
+
+
+
+LAB4
+savePresentation
+strategy=SET
+entityName="New presentation"
+fill_color="yellow"
+font_family="Roboto"
+
+
+LAB4
+addPresentationSlide
+strategy=SET
+presentationId=AEBC80E3-319A-480D-A6AC-011357F93500
+entityName="New presentation slide"
+index=1

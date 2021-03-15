@@ -27,6 +27,21 @@ public class Enums {
         deleteAssessment
     };
 
+    public enum METHODS_LAB_4 {
+        savePresentation,
+        getPresentationById,
+        addPresentationSlide,
+        removePresentationSlide,
+        updatePresentationSlide,
+        getSlideById
+    }
+
+    public enum COLLECTION_STRATEGY {
+        LIST,
+        SET,
+        MAP
+    }
+
     public enum Mark {
         awful,
         bad,

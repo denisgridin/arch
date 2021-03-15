@@ -6,6 +6,7 @@ import ru.sfedu.Arch.Enums.INHERITANCE_STRATEGY;
 import ru.sfedu.Arch.lab1.api.Api1;
 import ru.sfedu.Arch.lab2.api.Api2;
 import ru.sfedu.Arch.lab2.model.TestEntity;
+import ru.sfedu.Arch.lab4.CollectionApi;
 import ru.sfedu.Arch.utils.Messages;
 
 import java.util.HashMap;
@@ -30,9 +31,9 @@ public class Runner {
             case LAB3: {
                 return runThirdLab(method, args);
             }
-//            case LAB4: {
-//                return runFourthLab(method, args);
-//            }
+            case LAB4: {
+                return runFourthLab(method, args);
+            }
             default: {
                 log.error(Messages.ERROR_CANT_FIND_METHOD_OR_LAB);
                 return new Result(Enums.STATUS.error, Messages.ERROR_CANT_FIND_METHOD_OR_LAB);
@@ -40,14 +41,42 @@ public class Runner {
         }
     }
 
-//    private Result runFourthLab(String method, HashMap args) {
-//        try {
-//        } catch (Error error) {
-//            log.error(error);
-//            log.error(Messages.ERROR_CANT_FIND_METHOD_OR_LAB);
-//            return new Result(Enums.STATUS.error, Messages.ERROR_CANT_FIND_METHOD_OR_LAB);
-//        }
-//    }
+    private Result runFourthLab(String method, HashMap args) {
+        try {
+            Enums.METHODS_LAB_4 function = Enums.METHODS_LAB_4.valueOf(method);
+            Enums.COLLECTION_STRATEGY strategy = Enums.COLLECTION_STRATEGY.valueOf((String) args.get(Constants.FIELD_STRATEGY));
+            CollectionApi api = new CollectionApi();
+
+            switch (function) {
+                case savePresentation: {
+                    return api.buildAndSavePresentation(strategy, args);
+                }
+                case getPresentationById: {
+                    return api.retrievePresentation(strategy, args);
+                }
+                case addPresentationSlide: {
+                    return api.addSlideInPresentation(strategy, args);
+                }
+//                case removePresentationSlide: {
+//                    break;
+//                }
+//                case updatePresentationSlide: {
+//                    break;
+//                }
+//                case getSlideById: {
+//                    break;
+//                }
+                default: {
+                    log.error(Messages.ERROR_METHOD_RUN);
+                    return new Result(Enums.STATUS.error, Messages.ERROR_METHOD_RUN);
+                }
+            }
+        } catch (Error error) {
+            log.error(error);
+            log.error(Messages.ERROR_CANT_FIND_METHOD_OR_LAB);
+            return new Result(Enums.STATUS.error, Messages.ERROR_CANT_FIND_METHOD_OR_LAB);
+        }
+    }
 
     public void runFirstLab (String method) {
         try {

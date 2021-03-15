@@ -77,3 +77,11 @@ strategy=SET
 presentationId=AEBC80E3-319A-480D-A6AC-011357F93500
 entityName="New presentation slide"
 index=1
+
+LAB4
+getSlideById
+strategy=SET
+id=5144C11D-B6AE-40A4-84BF-92D3D30043D1
+presentation_id=AEBC80E3-319A-480D-A6AC-011357F93500
+entityName="New presentation slide (map strategy) updated"
+slide_index=2

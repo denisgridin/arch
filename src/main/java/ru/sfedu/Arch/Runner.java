@@ -19,25 +19,31 @@ public class Runner {
     public Runner () {}
 
     public Result run (Enums.LAB lab, String method, HashMap args) {
-        switch (lab) {
-            case LAB1: {
-                runFirstLab(method);
-                return new Result(Enums.STATUS.success, Constants.EMPTY_VALUE);
+        try {
+            switch (lab) {
+                case LAB1: {
+                    runFirstLab(method);
+                    return new Result(Enums.STATUS.success, Constants.EMPTY_VALUE);
+                }
+                case LAB2: {
+                    runSecondLab(method, args);
+                    return new Result(Enums.STATUS.success, Constants.EMPTY_VALUE);
+                }
+                case LAB3: {
+                    return runThirdLab(method, args);
+                }
+                case LAB4: {
+                    return runFourthLab(method, args);
+                }
+                default: {
+                    log.error(Messages.ERROR_CANT_FIND_METHOD_OR_LAB);
+                    return new Result(Enums.STATUS.error, Messages.ERROR_CANT_FIND_METHOD_OR_LAB);
+                }
             }
-            case LAB2: {
-                runSecondLab(method, args);
-                return new Result(Enums.STATUS.success, Constants.EMPTY_VALUE);
-            }
-            case LAB3: {
-                return runThirdLab(method, args);
-            }
-            case LAB4: {
-                return runFourthLab(method, args);
-            }
-            default: {
-                log.error(Messages.ERROR_CANT_FIND_METHOD_OR_LAB);
-                return new Result(Enums.STATUS.error, Messages.ERROR_CANT_FIND_METHOD_OR_LAB);
-            }
+        } catch (Exception error) {
+            log.error(error);
+            log.error(Messages.ERROR_METHOD_RUN);
+            return new Result(Enums.STATUS.error, Messages.ERROR_METHOD_RUN);
         }
     }
 
@@ -57,15 +63,15 @@ public class Runner {
                 case addPresentationSlide: {
                     return api.addSlideInPresentation(strategy, args);
                 }
-//                case removePresentationSlide: {
-//                    break;
-//                }
-//                case updatePresentationSlide: {
-//                    break;
-//                }
-//                case getSlideById: {
-//                    break;
-//                }
+                case updatePresentationSlide: {
+                    return api.updatePresentationSlide(strategy, args);
+                }
+                case getSlideById: {
+                    return api.getSlideById(strategy, args);
+                }
+                case removePresentationSlide: {
+                    return api.removeSlide(strategy, args);
+                }
                 default: {
                     log.error(Messages.ERROR_METHOD_RUN);
                     return new Result(Enums.STATUS.error, Messages.ERROR_METHOD_RUN);

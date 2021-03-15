@@ -109,8 +109,13 @@ public class MapCollectionApi extends EntityApi {
                 Presentation presentation = optionalPresentation.get();
 
                 Map<String, String> slidesMap = presentation.getSlides();
-                Map map = slidesMap;
                 slidesMap.remove(String.valueOf(slideId));
+
+                Transaction transaction = session.beginTransaction();
+                presentation.setSlides(slidesMap);
+                event.debug(1, String.format(Messages.SET_FIELD, Constants.FIELD_SLIDES, slidesMap));
+                session.merge(presentation);
+                transaction.commit();
                 return new Result(Enums.STATUS.success, Messages.SUCCESS_SLIDE_REMOVED);
 
             } else {

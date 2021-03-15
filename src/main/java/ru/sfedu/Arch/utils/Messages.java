@@ -63,4 +63,7 @@ public class Messages {
     public static final String ERROR_FIELD_NOT_SET = "Field not set: %s";
     public static final String ATTEMPT_ADD_SLIDE = "Attempt to add slide";
     public static final String FIELD_SLIDE = "Slide: ";
+    public static final String ATTEMPT_UPDATE_SLIDE = "Attempt to update slide";
+    public static final String ERROR_SLIDE_DELETE = "Unable to delete slide";
+    public static final String REMOVE_SLIDE = "Remove slide: %s";
 }

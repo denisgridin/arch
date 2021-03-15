@@ -180,4 +180,211 @@ public class CollectionApi {
             return new Result(Enums.STATUS.error, Messages.ERROR_SLIDE_SAVE);
         }
     }
+
+    public Result updatePresentationSlide (Enums.COLLECTION_STRATEGY strategy, HashMap args) {
+        try {
+            switch (strategy) {
+                case SET: {
+                    SetCollectionApi api = new SetCollectionApi();
+                    event.info(1, Messages.ATTEMPT_UPDATE_SLIDE);
+                    UUID slideId = UUID.fromString((String) args.get(Constants.FIELD_ID));
+                    UUID presentationId = UUID.fromString((String) args.get(Constants.FIELD_PRESENTATION_ID));
+
+                    if (slideId == null) {
+                        event.error(1, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_ID));
+                        return new Result(Enums.STATUS.error, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_ID));
+                    }
+                    if (presentationId == null) {
+                        event.error(1, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_PRESENTATION_ID));
+                        return new Result(Enums.STATUS.error, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_PRESENTATION_ID));
+                    }
+                    event.info(1, String.format(Messages.SET_FIELD, Constants.FIELD_ID, slideId));
+                    event.info(2, String.format(Messages.SET_FIELD, Constants.FIELD_PRESENTATION_ID, presentationId));
+                    return api.updatePresentationSlide(slideId, presentationId, args);
+                }
+                case LIST: {
+                    ListCollectionApi api = new ListCollectionApi();
+                    event.info(1, Messages.ATTEMPT_UPDATE_SLIDE);
+                    UUID slideId = UUID.fromString((String) args.get(Constants.FIELD_ID));
+                    UUID presentationId = UUID.fromString((String) args.get(Constants.FIELD_PRESENTATION_ID));
+
+                    if (slideId == null) {
+                        event.error(1, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_ID));
+                        return new Result(Enums.STATUS.error, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_ID));
+                    }
+                    if (presentationId == null) {
+                        event.error(1, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_PRESENTATION_ID));
+                        return new Result(Enums.STATUS.error, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_PRESENTATION_ID));
+                    }
+                    event.info(1, String.format(Messages.SET_FIELD, Constants.FIELD_ID, slideId));
+                    event.info(2, String.format(Messages.SET_FIELD, Constants.FIELD_PRESENTATION_ID, presentationId));
+                    return api.updatePresentationSlide(slideId, presentationId, args);
+                }
+                case MAP: {
+                    MapCollectionApi api = new MapCollectionApi();
+                    event.info(1, Messages.ATTEMPT_UPDATE_SLIDE);
+                    UUID slideId = UUID.fromString((String) args.get(Constants.FIELD_ID));
+                    UUID presentationId = UUID.fromString((String) args.get(Constants.FIELD_PRESENTATION_ID));
+
+                    if (slideId == null) {
+                        event.error(1, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_ID));
+                        return new Result(Enums.STATUS.error, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_ID));
+                    }
+                    if (presentationId == null) {
+                        event.error(1, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_PRESENTATION_ID));
+                        return new Result(Enums.STATUS.error, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_PRESENTATION_ID));
+                    }
+                    event.info(1, String.format(Messages.SET_FIELD, Constants.FIELD_ID, slideId));
+                    event.info(2, String.format(Messages.SET_FIELD, Constants.FIELD_PRESENTATION_ID, presentationId));
+                    return api.updatePresentationSlide(slideId, presentationId, args);
+                }
+                default: {
+                    event.error(1, Messages.ERROR_UNABLE_COLLECTION_STRATEGY);
+                    return new Result(Enums.STATUS.error, Messages.ERROR_UNABLE_COLLECTION_STRATEGY);
+                }
+            }
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_SLIDE_UPDATE);
+            return new Result(Enums.STATUS.error, Messages.ERROR_SLIDE_UPDATE);
+        }
+    }
+
+    public Result getSlideById (Enums.COLLECTION_STRATEGY strategy, HashMap args) {
+        try {
+            switch (strategy) {
+                case SET: {
+                    SetCollectionApi api = new SetCollectionApi();
+                    event.info(1, Messages.ATTEMPT_UPDATE_SLIDE);
+                    UUID slideId = UUID.fromString((String) args.get(Constants.FIELD_ID));
+                    UUID presentationId = UUID.fromString((String) args.get(Constants.FIELD_PRESENTATION_ID));
+
+                    if (slideId == null) {
+                        event.error(1, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_ID));
+                        return new Result(Enums.STATUS.error, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_ID));
+                    }
+                    if (presentationId == null) {
+                        event.error(1, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_PRESENTATION_ID));
+                        return new Result(Enums.STATUS.error, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_PRESENTATION_ID));
+                    }
+                    event.info(1, String.format(Messages.SET_FIELD, Constants.FIELD_ID, slideId));
+                    event.info(2, String.format(Messages.SET_FIELD, Constants.FIELD_PRESENTATION_ID, presentationId));
+                    return api.getSlideById(slideId, presentationId);
+                }
+                case LIST: {
+                    ListCollectionApi api = new ListCollectionApi();
+                    event.info(1, Messages.ATTEMPT_UPDATE_SLIDE);
+                    UUID slideId = UUID.fromString((String) args.get(Constants.FIELD_ID));
+                    UUID presentationId = UUID.fromString((String) args.get(Constants.FIELD_PRESENTATION_ID));
+
+                    if (slideId == null) {
+                        event.error(1, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_ID));
+                        return new Result(Enums.STATUS.error, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_ID));
+                    }
+                    if (presentationId == null) {
+                        event.error(1, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_PRESENTATION_ID));
+                        return new Result(Enums.STATUS.error, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_PRESENTATION_ID));
+                    }
+                    event.info(1, String.format(Messages.SET_FIELD, Constants.FIELD_ID, slideId));
+                    event.info(2, String.format(Messages.SET_FIELD, Constants.FIELD_PRESENTATION_ID, presentationId));
+                    return api.getSlideById(slideId, presentationId);
+                }
+                case MAP: {
+                    MapCollectionApi api = new MapCollectionApi();
+                    event.info(1, Messages.ATTEMPT_UPDATE_SLIDE);
+                    UUID slideId = UUID.fromString((String) args.get(Constants.FIELD_ID));
+                    UUID presentationId = UUID.fromString((String) args.get(Constants.FIELD_PRESENTATION_ID));
+
+                    if (slideId == null) {
+                        event.error(1, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_ID));
+                        return new Result(Enums.STATUS.error, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_ID));
+                    }
+                    if (presentationId == null) {
+                        event.error(1, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_PRESENTATION_ID));
+                        return new Result(Enums.STATUS.error, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_PRESENTATION_ID));
+                    }
+                    event.info(1, String.format(Messages.SET_FIELD, Constants.FIELD_ID, slideId));
+                    event.info(2, String.format(Messages.SET_FIELD, Constants.FIELD_PRESENTATION_ID, presentationId));
+                    return api.getSlideById(slideId, presentationId);
+                }
+                default: {
+                    event.error(1, Messages.ERROR_UNABLE_COLLECTION_STRATEGY);
+                    return new Result(Enums.STATUS.error, Messages.ERROR_UNABLE_COLLECTION_STRATEGY);
+                }
+            }
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_SLIDE_GET);
+            return new Result(Enums.STATUS.error, Messages.ERROR_SLIDE_GET);
+        }
+    }
+
+    public Result removeSlide (Enums.COLLECTION_STRATEGY strategy, HashMap args) {
+        try {
+            switch (strategy) {
+                case SET: {
+                    SetCollectionApi api = new SetCollectionApi();
+                    event.info(1, Messages.ATTEMPT_UPDATE_SLIDE);
+                    UUID slideId = UUID.fromString((String) args.get(Constants.FIELD_ID));
+                    UUID presentationId = UUID.fromString((String) args.get(Constants.FIELD_PRESENTATION_ID));
+
+                    if (slideId == null) {
+                        event.error(1, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_ID));
+                        return new Result(Enums.STATUS.error, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_ID));
+                    }
+                    if (presentationId == null) {
+                        event.error(1, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_PRESENTATION_ID));
+                        return new Result(Enums.STATUS.error, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_PRESENTATION_ID));
+                    }
+                    event.info(1, String.format(Messages.SET_FIELD, Constants.FIELD_ID, slideId));
+                    event.info(2, String.format(Messages.SET_FIELD, Constants.FIELD_PRESENTATION_ID, presentationId));
+                    return api.removePresentationSlide(slideId, presentationId);
+                }
+                case LIST: {
+                    ListCollectionApi api = new ListCollectionApi();
+                    event.info(1, Messages.ATTEMPT_UPDATE_SLIDE);
+                    UUID slideId = UUID.fromString((String) args.get(Constants.FIELD_ID));
+                    UUID presentationId = UUID.fromString((String) args.get(Constants.FIELD_PRESENTATION_ID));
+
+                    if (slideId == null) {
+                        event.error(1, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_ID));
+                        return new Result(Enums.STATUS.error, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_ID));
+                    }
+                    if (presentationId == null) {
+                        event.error(1, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_PRESENTATION_ID));
+                        return new Result(Enums.STATUS.error, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_PRESENTATION_ID));
+                    }
+                    event.info(1, String.format(Messages.SET_FIELD, Constants.FIELD_ID, slideId));
+                    event.info(2, String.format(Messages.SET_FIELD, Constants.FIELD_PRESENTATION_ID, presentationId));
+                    return api.removePresentationSlide(slideId, presentationId);
+                }
+                case MAP: {
+                    MapCollectionApi api = new MapCollectionApi();
+                    event.info(1, Messages.ATTEMPT_UPDATE_SLIDE);
+                    UUID slideId = UUID.fromString((String) args.get(Constants.FIELD_ID));
+                    UUID presentationId = UUID.fromString((String) args.get(Constants.FIELD_PRESENTATION_ID));
+
+                    if (slideId == null) {
+                        event.error(1, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_ID));
+                        return new Result(Enums.STATUS.error, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_ID));
+                    }
+                    if (presentationId == null) {
+                        event.error(1, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_PRESENTATION_ID));
+                        return new Result(Enums.STATUS.error, String.format(Messages.ERROR_FIELD_NOT_SET, Constants.FIELD_PRESENTATION_ID));
+                    }
+                    event.info(1, String.format(Messages.SET_FIELD, Constants.FIELD_ID, slideId));
+                    event.info(2, String.format(Messages.SET_FIELD, Constants.FIELD_PRESENTATION_ID, presentationId));
+                    return api.removePresentationSlide(slideId, presentationId);
+                }
+                default: {
+                    event.error(1, Messages.ERROR_UNABLE_COLLECTION_STRATEGY);
+                    return new Result(Enums.STATUS.error, Messages.ERROR_UNABLE_COLLECTION_STRATEGY);
+                }
+            }
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_SLIDE_DELETE);
+            return new Result(Enums.STATUS.error, Messages.ERROR_SLIDE_DELETE);
+        }
+    }
 }

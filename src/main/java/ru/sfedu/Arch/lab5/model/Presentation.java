@@ -36,8 +36,8 @@ public class Presentation implements Serializable {
     @OneToMany(mappedBy = Constants.FIELD_PRESENTATION, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Slide> slides = new ArrayList<Slide>();
 
-//    @OneToMany(mappedBy = Constants.FIELD_PRESENTATION, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private List<Comment> comments;
+    @OneToMany(mappedBy = Constants.FIELD_PRESENTATION, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Comment> comments = new ArrayList<Comment>();;
 //
 //    private HashMap marks;
 
@@ -81,6 +81,14 @@ public class Presentation implements Serializable {
         slides = items;
     }
 
+    public void setComments (List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public List<Comment> getComments () {
+        return comments;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -106,6 +114,7 @@ public class Presentation implements Serializable {
                 ", fillColor='" + fillColor + '\'' +
                 ", fontFamily='" + fontFamily + '\'' +
                 ", slides=" + getSlides()  +
+                ", comments=" + getComments()  +
                 '}';
         return formatReturn;
     }

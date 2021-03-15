@@ -6,10 +6,12 @@ import org.hibernate.dialect.lock.OptimisticEntityLockException;
 import org.junit.jupiter.api.Test;
 import ru.sfedu.Arch.Enums;
 import ru.sfedu.Arch.Result;
+import ru.sfedu.Arch.lab5.model.Comment;
 import ru.sfedu.Arch.lab5.model.Presentation;
 import ru.sfedu.Arch.lab5.model.Slide;
 import ru.sfedu.Arch.utils.Messages;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,9 +28,10 @@ class ApiProviderTest {
 
     /**
      * Add default test presentation
+     *
      * @return Result - result of execution
      */
-    private Result addPresentation () {
+    private Result addPresentation() {
         Presentation presentation = new Presentation();
         presentation.setName("Presentation name");
         presentation.setFontFamily("Roboto");
@@ -40,7 +43,7 @@ class ApiProviderTest {
     }
 
 
-    private Result addSlide () {
+    private Result addSlide() {
         Result resultAddPresentation = addPresentation();
 
         if (resultAddPresentation.getStatus() == Enums.STATUS.success) {
@@ -53,6 +56,29 @@ class ApiProviderTest {
             slide.setName(name);
             slide.setIndex(index);
             return api.addPresentationSlide(slide, presentationId);
+        } else {
+            return new Result(Enums.STATUS.error, Messages.ERROR_SLIDE_CREATE);
+        }
+    }
+
+    private Result addComment() {
+        Result resultAddPresentation = addPresentation();
+
+        if (resultAddPresentation.getStatus() == Enums.STATUS.success) {
+            Presentation presentation = (Presentation) resultAddPresentation.getReturnValue();
+
+            UUID presentationId = presentation.getId();
+            Comment comment = new Comment();
+
+            String datetime = String.valueOf(new Date(System.currentTimeMillis()));
+            String text = "text";
+            Enums.Role role = Enums.Role.editor;
+
+            comment.setDatetime(datetime);
+            comment.setText(text);
+            comment.setRole(role);
+
+            return api.addPresentationComment(comment, presentationId);
         } else {
             return new Result(Enums.STATUS.error, Messages.ERROR_SLIDE_CREATE);
         }
@@ -193,7 +219,7 @@ class ApiProviderTest {
      * Type: Success
      */
     @Test
-    void getPresentationSlidesSuccess () {
+    void getPresentationSlidesSuccess() {
         Result resultAddPresentation = addPresentation();
 
         if (resultAddPresentation.getStatus() == Enums.STATUS.success) {
@@ -208,7 +234,7 @@ class ApiProviderTest {
      * Type: Fail
      */
     @Test
-    void getPresentationSlidesFail () {
+    void getPresentationSlidesFail() {
         Result result = api.getPresentationSlides(UUID.randomUUID());
         assertTrue(result.getStatus() == Enums.STATUS.success);
     }
@@ -219,7 +245,7 @@ class ApiProviderTest {
      * Type: Success
      */
     @Test
-    void addPresentationSlideSuccess () {
+    void addPresentationSlideSuccess() {
         try {
             Result resultAddPresentation = addPresentation();
 
@@ -245,7 +271,7 @@ class ApiProviderTest {
      * Type: Fail
      */
     @Test
-    void addPresentationSlideFail () {
+    void addPresentationSlideFail() {
         Result result = api.addPresentationSlide(new Slide(), UUID.randomUUID());
         assertTrue(result.getStatus() == Enums.STATUS.error);
     }
@@ -256,7 +282,7 @@ class ApiProviderTest {
      * Type: Success
      */
     @Test
-    void getSlideByIdSuccess () {
+    void getSlideByIdSuccess() {
         Result resultAddPresentation = addPresentation();
 
         if (resultAddPresentation.getStatus() == Enums.STATUS.success) {
@@ -286,7 +312,7 @@ class ApiProviderTest {
      * Type: Fail
      */
     @Test
-    void getSlideByIdFail () {
+    void getSlideByIdFail() {
         Result resultGetSlide = api.getSlideById(UUID.randomUUID());
         assertTrue(resultGetSlide.getStatus() == Enums.STATUS.error);
     }
@@ -297,7 +323,7 @@ class ApiProviderTest {
      * Type: Success
      */
     @Test
-    void updateSlideSuccess () {
+    void updateSlideSuccess() {
         Result result = addSlide();
 
         if (result.getStatus() == Enums.STATUS.success) {
@@ -335,11 +361,10 @@ class ApiProviderTest {
      * Type: Fail
      */
     @Test
-    void updateSlideFail () {
+    void updateSlideFail() {
         Result resultUpdate = api.updateSlide(new Slide());
         assertTrue(resultUpdate.getStatus() == Enums.STATUS.error);
     }
-
 
 
     /**
@@ -347,7 +372,7 @@ class ApiProviderTest {
      * Type: Success
      */
     @Test
-    void deleteSlideSuccess () {
+    void deleteSlideSuccess() {
         Result result = addSlide();
         if (result.getStatus() == Enums.STATUS.success) {
             Slide slide = (Slide) result.getReturnValue();
@@ -363,8 +388,133 @@ class ApiProviderTest {
      * Type: Fail
      */
     @Test
-    void deleteSlideFail () {
+    void deleteSlideFail() {
         Result resultDelete = api.deleteSlide(UUID.randomUUID());
         assertTrue(resultDelete.getStatus() == Enums.STATUS.error);
     }
+
+    /**
+     * Add presentation comment
+     * Type: Success
+     */
+    @Test
+    void addPresentationCommentSuccess () {
+        Result result = addComment();
+        assertTrue(result.getStatus() == Enums.STATUS.success);
+    }
+
+    /**
+     * Add presentation comment
+     * Type: Fail
+     */
+    @Test
+    void addPresentationCommentFail () {
+        Result result = api.addPresentationComment(new Comment(), UUID.randomUUID());
+        assertTrue(result.getStatus() == Enums.STATUS.error);
+    }
+
+    /**
+     * Get presentation comment
+     * Type: Success
+     */
+    @Test
+    void getCommentByIdSuccess () {
+        Result result = addComment();
+
+        if (result.getStatus() == Enums.STATUS.success) {
+            Comment comment = (Comment) result.getReturnValue();
+            Result resultGetComment = api.getCommentById(comment.getId());
+            assertTrue(result.getStatus() == Enums.STATUS.success);
+
+        } else {
+            fail();
+        }
+    }
+
+    /**
+     * Get presentation comment
+     * Type: Fail
+     */
+    @Test
+    void getCommentByIdFail () {
+        Result resultGetComment = api.getCommentById(UUID.randomUUID());
+        assertTrue(resultGetComment.getStatus() == Enums.STATUS.error);
+    }
+
+
+
+    /**
+     * Update presentation comment
+     * Type: Success
+     */
+    @Test
+    void updateCommentSuccess() {
+        Result result = addComment();
+
+        if (result.getStatus() == Enums.STATUS.success) {
+            Comment comment = (Comment) result.getReturnValue();
+
+            String text = "Edited text";
+            Enums.Role role = Enums.Role.guest;
+
+            comment.setText(text);
+            comment.setRole(role);
+            Result resultUpdate = api.updateComment(comment);
+
+            assertTrue(resultUpdate.getStatus() == Enums.STATUS.success);
+
+            Result resultGetComment = api.getCommentById(comment.getId());
+            if (resultGetComment.getStatus() == Enums.STATUS.success) {
+                Optional<Comment> optionalComment = (Optional<Comment>) resultGetComment.getReturnValue();
+                Comment item = optionalComment.get();
+
+                assertEquals(item.getText(), comment.getText());
+                assertEquals(item.getRole(), comment.getRole());
+
+            } else {
+                fail();
+            }
+        } else {
+            fail();
+        }
+    }
+
+    /**
+     * Update presentation comment
+     * Type: Fail
+     */
+    @Test
+    void updateCommentFail() {
+        Result resultUpdate = api.updateComment(new Comment());
+        assertTrue(resultUpdate.getStatus() == Enums.STATUS.error);
+    }
+
+
+    /**
+     * Delete presentation comment
+     * Type: Success
+     */
+    @Test
+    void deleteCommentSuccess() {
+        Result result = addComment();
+        if (result.getStatus() == Enums.STATUS.success) {
+            Comment comment = (Comment) result.getReturnValue();
+            Result resultDelete = api.deleteComment(comment.getId());
+            assertTrue(resultDelete.getStatus() == Enums.STATUS.success);
+        } else {
+            fail();
+        }
+    }
+
+    /**
+     * Delete presentation comment
+     * Type: Fail
+     */
+    @Test
+    void deleteCommentFail() {
+        Result resultDelete = api.deleteComment(UUID.randomUUID());
+        assertTrue(resultDelete.getStatus() == Enums.STATUS.error);
+    }
+
 }
+

@@ -8,8 +8,8 @@ import ru.sfedu.Arch.Enums;
 import javax.persistence.*;
 import java.util.UUID;
 
-@MappedSuperclass
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Entity(name = Constants.ENTITY_FEEDBACK_MAIN)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Feedback {
     private Enums.Role role;
 
@@ -19,10 +19,6 @@ public abstract class Feedback {
     @Column(name = Constants.FIELD_ID, columnDefinition="uniqueidentifier", nullable = false)
     @Type(type = "uuid-char")
     private UUID id;
-
-    @Column(name = Constants.FIELD_PRESENTATION_ID, columnDefinition="uniqueidentifier", nullable = false)
-    @Type(type = "uuid-char")
-    private UUID presentationId;
 
 
     public Feedback() {}
@@ -41,13 +37,5 @@ public abstract class Feedback {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public UUID getPresentationId() {
-        return presentationId;
-    }
-
-    public void setPresentationId(UUID presentationId) {
-        this.presentationId = presentationId;
     }
 }

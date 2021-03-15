@@ -70,4 +70,8 @@ public class Messages {
     public static final String ERROR_SLIDES_GET = "Unable to get slides";
     public static final String ERROR_SLIDE_CREATE = "Unable to create slide";
     public static final String SHOW_BEAN = "Bean: %s";
+    public static final String ERROR_COMMENTS_GET = "Unable to get comments";
+    public static final String ERROR_COMMENT_CREATE = "Unable to create comment";
+    public static final String ERROR_COMMENT_UPDATE = "Unable to update comment";
+    public static final String ERROR_COMMENT_DELETE = "Unable to delete comment";
 }

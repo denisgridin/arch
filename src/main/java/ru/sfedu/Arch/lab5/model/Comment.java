@@ -2,15 +2,13 @@ package ru.sfedu.Arch.lab5.model;
 
 import ru.sfedu.Arch.Constants;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 
-@Entity(name = Constants.ENTITY_COMMENT_MAPPED_SUPER_CLASS)
-@Table(name = Constants.TABLE_COMMENTS)
+@Entity(name = Constants.ENTITY_COMMENT_MAIN)
+@Table(name = Constants.TABLE_COMMENTS_MAIN)
 public class Comment extends Feedback implements Serializable {
 
     public Comment () {}
@@ -20,6 +18,19 @@ public class Comment extends Feedback implements Serializable {
 
     @Column(name = Constants.FIELD_DATETIME, nullable = false)
     private String datetime;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = Constants.FIELD_PRESENTATION_ID)
+    protected Presentation presentation;
+
+    public void setPresentation (Presentation presentation) {
+        this.presentation = presentation;
+    }
+
+    public Presentation getPresentation () {
+        return presentation;
+    }
 
     public String getText() {
         return text;
@@ -43,7 +54,7 @@ public class Comment extends Feedback implements Serializable {
                 "text='" + text + '\'' +
                 ", datetime='" + datetime + '\'' +
                 ", id=" + getId() +
-                ", presentationId=" + getPresentationId() +
+                ", presentationId=" + presentation.getId() +
                 ", role=" + getRole() +
                 '}';
     }

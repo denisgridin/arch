@@ -98,4 +98,9 @@ public class Constants {
     public static final String FIELD_SLIDE = "slide";
     public static final String ENTITY_ELEMENT_MAIN = "element_main";
     public static final String FIELD_ELEMENT_TYPE = "element_type";
+    public static final String TABLE_COMMENTS_MAIN = "comment_main";
+    public static final String ENTITY_COMMENT_MAIN = "comment_main";
+    public static final String TABLE_ASSESSMENT_MAIN = "assessment_main";
+    public static final String ENTITY_ASSESSMENT_MAIN = "assessment_main";
+    public static final String ENTITY_FEEDBACK_MAIN = "feedback_main";
 }

@@ -9,8 +9,8 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Entity(name = Constants.ENTITY_ASSESSMENT_MAPPED_SUPER_CLASS)
-@Table(name = Constants.TABLE_ASSESSMENT_MAPPED_SUPER_CLASS)
+@Entity(name = Constants.ENTITY_ASSESSMENT_MAIN)
+@Table(name = Constants.TABLE_ASSESSMENT_MAIN)
 public class Assessment extends Feedback implements Serializable {
     private Enums.Mark mark;
 

@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 import ru.sfedu.Arch.Enums;
 import ru.sfedu.Arch.Result;
 import ru.sfedu.Arch.lab3.EntityApi;
+import ru.sfedu.Arch.lab5.model.Comment;
 import ru.sfedu.Arch.lab5.model.Presentation;
 import ru.sfedu.Arch.lab5.model.Slide;
 import ru.sfedu.Arch.utils.EventWrapper;
@@ -179,6 +180,100 @@ public class ApiProvider extends EntityApi {
             event.error(1, error);
             event.error(2, Messages.ERROR_SLIDE_DELETE);
             return new Result(Enums.STATUS.error, Messages.ERROR_SLIDE_DELETE);
+        }
+    }
+
+
+    /*              comments section                */
+
+    /**
+     * Retrieve slides from data source
+     * @param presentationId - presentation identifier
+     * @return Result - result of execution
+     */
+    public Result getPresentationComments (UUID presentationId) {
+        try {
+            Result resultGetPresentation = getPresentationById(presentationId);
+            if (resultGetPresentation.getStatus() == Enums.STATUS.success) {
+                Optional<Presentation> optionalPresentation = (Optional<Presentation>) resultGetPresentation.getReturnValue();
+                Presentation presentation = optionalPresentation.get();
+
+                return new Result(Enums.STATUS.success, presentation.getComments());
+            } else {
+                return resultGetPresentation;
+            }
+        } catch (Exception error) {
+            event.error( 1, error);
+            event.error(2, Messages.ERROR_COMMENTS_GET);
+            return new Result(Enums.STATUS.error, Messages.ERROR_COMMENTS_GET);
+        }
+    }
+
+    public Result addPresentationComment (Comment comment, UUID presentationId) {
+        try {
+
+            event.info(2, String.format(Messages.SHOW_BEAN, presentationId));
+
+            Result result = getPresentationById(presentationId);
+
+            if (result.getStatus() == Enums.STATUS.success) {
+                Optional<Presentation> optionalPresentation = (Optional<Presentation>) result.getReturnValue();
+                Presentation presentation = optionalPresentation.get();
+                comment.setPresentation(presentation);
+                event.debug(1, String.format(Messages.SHOW_BEAN, comment));
+                Transaction transaction = session.beginTransaction();
+                event.debug(1, comment);
+                session.persist(comment);
+                transaction.commit();
+                session.close();
+
+                return new Result(Enums.STATUS.success, comment);
+            } else {
+                return result;
+            }
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_COMMENT_CREATE);
+            return new Result(Enums.STATUS.error, Messages.ERROR_COMMENT_CREATE);
+        }
+    }
+
+    public Result getCommentById (UUID commentId) {
+        try {
+            event.info(2, String.format(Messages.SHOW_BEAN, commentId));
+            return getBeanById(Comment.class, commentId);
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_SLIDE_GET);
+            return new Result(Enums.STATUS.error, Messages.ERROR_SLIDE_GET);
+        }
+    }
+
+    public Result updateComment (Comment comment) {
+        try {
+            return updateBean(comment);
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_COMMENT_UPDATE);
+            return new Result(Enums.STATUS.error, Messages.ERROR_COMMENT_UPDATE);
+        }
+    }
+
+    public Result deleteComment (UUID commentId) {
+        try {
+            Result result = getCommentById(commentId);
+
+            if (result.getStatus() == Enums.STATUS.success) {
+                Optional<Comment> optionalComment = (Optional<Comment>) result.getReturnValue();
+                Comment comment = optionalComment.get();
+                return deleteBean(comment);
+            } else {
+                return result;
+            }
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_COMMENT_DELETE);
+            return new Result(Enums.STATUS.error, Messages.ERROR_COMMENT_DELETE);
         }
     }
 }

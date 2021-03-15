@@ -3,13 +3,16 @@ package ru.sfedu.Arch.lab5.api;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import ru.sfedu.Arch.Enums;
 import ru.sfedu.Arch.Result;
 import ru.sfedu.Arch.lab3.EntityApi;
 import ru.sfedu.Arch.lab5.model.Presentation;
+import ru.sfedu.Arch.lab5.model.Slide;
 import ru.sfedu.Arch.utils.EventWrapper;
 import ru.sfedu.Arch.utils.Messages;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -85,6 +88,58 @@ public class ApiProvider extends EntityApi {
             event.error(1, error);
             event.error(2, Messages.ERROR_GET_PRESENTATION);
             return new Result(Enums.STATUS.error, Messages.ERROR_GET_PRESENTATION);
+        }
+    }
+
+    /**
+     * Retrieve slides from data source
+     * @param presentationId - presentation identifier
+     * @return Result - result of execution
+     */
+    public Result getPresentationSlides (UUID presentationId) {
+        try {
+            Result resultGetPresentation = getPresentationById(presentationId);
+            if (resultGetPresentation.getStatus() == Enums.STATUS.success) {
+                Optional<Presentation> optionalPresentation = (Optional<Presentation>) resultGetPresentation.getReturnValue();
+                Presentation presentation = optionalPresentation.get();
+
+                return new Result(Enums.STATUS.success, presentation.getSlides());
+            } else {
+                return resultGetPresentation;
+            }
+        } catch (Exception error) {
+            event.error( 1, error);
+            event.error(2, Messages.ERROR_SLIDES_GET);
+            return new Result(Enums.STATUS.error, Messages.ERROR_SLIDES_GET);
+        }
+    }
+
+    public Result addPresentationSlide (Slide slide, UUID presentationId) {
+        try {
+
+            event.info(2, String.format(Messages.SHOW_BEAN, presentationId));
+
+            Result result = getPresentationById(presentationId);
+
+            if (result.getStatus() == Enums.STATUS.success) {
+                Optional<Presentation> optionalPresentation = (Optional<Presentation>) result.getReturnValue();
+                Presentation presentation = optionalPresentation.get();
+                slide.setPresentation(presentation);
+
+                Transaction transaction = session.beginTransaction();
+                event.debug(1, slide);
+                session.persist(slide);
+                transaction.commit();
+                session.close();
+
+                return new Result(Enums.STATUS.success, slide);
+            } else {
+                return result;
+            }
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_SLIDE_CREATE);
+            return new Result(Enums.STATUS.error, Messages.ERROR_SLIDE_CREATE);
         }
     }
 }

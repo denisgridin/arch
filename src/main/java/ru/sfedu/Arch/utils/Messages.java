@@ -67,4 +67,7 @@ public class Messages {
     public static final String ERROR_SLIDE_DELETE = "Unable to delete slide";
     public static final String REMOVE_SLIDE = "Remove slide: %s";
     public static final String ATTEMPT_REMOVE_PRESENTATION = "Attempt to remove presentation: %s";
+    public static final String ERROR_SLIDES_GET = "Unable to get slides";
+    public static final String ERROR_SLIDE_CREATE = "Unable to create slide";
+    public static final String SHOW_BEAN = "Bean: %s";
 }

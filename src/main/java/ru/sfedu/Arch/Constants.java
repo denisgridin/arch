@@ -88,4 +88,14 @@ public class Constants {
     public static final String TABLE_PRESENTATION_MAIN = "presentation_main";
     public static final String ENTITY_SLIDE_MAIN = "slide_main";
     public static final String TABLE_ENTITY_SLIDE_MAIN = "slide_main";
+
+
+    public static final String FIELD_X = "x";
+    public static final String FIELD_Y = "y";
+    public static final String FIELD_WIDTH = "width";
+    public static final String FIELD_HEIGHT = "height";
+    public static final String FIELD_ROTATION = "rotation";
+    public static final String FIELD_SLIDE = "slide";
+    public static final String ENTITY_ELEMENT_MAIN = "element_main";
+    public static final String FIELD_ELEMENT_TYPE = "element_type";
 }

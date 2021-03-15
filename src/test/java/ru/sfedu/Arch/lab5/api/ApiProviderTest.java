@@ -1,5 +1,7 @@
 package ru.sfedu.Arch.lab5.api;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.dialect.lock.OptimisticEntityLockException;
 import org.junit.jupiter.api.Test;
 import ru.sfedu.Arch.Enums;
@@ -17,6 +19,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class ApiProviderTest {
 
     private ApiProvider api = new ApiProvider();
+
+    private static final Logger logger = LogManager.getLogger(ApiProviderTest.class);
 
 
     /**
@@ -97,7 +101,7 @@ class ApiProviderTest {
 
         if (resultAddPresentation.getStatus() == Enums.STATUS.success) {
             Presentation presentation = (Presentation) resultAddPresentation.getReturnValue();
-            Result result = api.deletePresentationById(presentation.getId());
+            Result result = api.deletePresentationById(UUID.fromString("CE99613D-C9C3-4D1F-85A0-6C0200547C18"));
 
             assertTrue(result.getStatus() == Enums.STATUS.success);
         } else {
@@ -163,5 +167,68 @@ class ApiProviderTest {
         Result result = api.updatePresentation(new Presentation());
         assertTrue(result.getStatus() == Enums.STATUS.error);
     }
+
+    /**
+     * Get presentation slides
+     * Type: Success
+     */
+    @Test
+    void getPresentationSlidesSuccess () {
+        Result resultAddPresentation = addPresentation();
+
+        if (resultAddPresentation.getStatus() == Enums.STATUS.success) {
+            Presentation presentation = (Presentation) resultAddPresentation.getReturnValue();
+            Result result = api.getPresentationSlides(UUID.fromString("B4319BAB-21BA-4563-841E-B209B6976119"));
+            assertTrue(result.getStatus() == Enums.STATUS.success);
+        } else fail();
+    }
+
+    /**
+     * Get presentation slides
+     * Type: Fail
+     */
+    @Test
+    void getPresentationSlidesFail () {
+        Result result = api.getPresentationSlides(UUID.randomUUID());
+        assertTrue(result.getStatus() == Enums.STATUS.success);
+    }
+
+
+    /**
+     * Add presentation slide
+     * Type: Success
+     */
+    @Test
+    void addPresentationSlideSuccess () {
+        try {
+            Result resultAddPresentation = addPresentation();
+
+            if (resultAddPresentation.getStatus() == Enums.STATUS.success) {
+                Presentation presentation = (Presentation) resultAddPresentation.getReturnValue();
+                String name = "Slide name 123";
+                int index = 1;
+                UUID presentationId = UUID.fromString("B4319BAB-21BA-4563-841E-B209B6976119");
+
+                Slide slide = new Slide();
+                slide.setName(name);
+                slide.setIndex(index);
+                Result result = api.addPresentationSlide(slide, presentationId);
+                assertTrue(result.getStatus() == Enums.STATUS.success);
+            } else fail();
+        } catch (Exception error) {
+            logger.error(error);
+        }
+    }
+
+    /**
+     * Add presentation slide
+     * Type: Fail
+     */
+    @Test
+    void addPresentationSlideFail () {
+        Result result = api.addPresentationSlide(new Slide(), UUID.randomUUID());
+        assertTrue(result.getStatus() == Enums.STATUS.error);
+    }
+
 
 }

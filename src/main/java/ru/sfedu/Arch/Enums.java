@@ -42,6 +42,18 @@ public class Enums {
         MAP
     }
 
+    public enum ElementType {
+        content,
+        shape
+    }
+
+    public enum FontCase {
+        uppercase,
+        lowercase,
+        normal
+    }
+
+
     public enum Mark {
         awful,
         bad,

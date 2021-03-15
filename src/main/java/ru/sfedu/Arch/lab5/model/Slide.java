@@ -8,6 +8,8 @@ import ru.sfedu.Arch.Constants;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -22,15 +24,19 @@ public class Slide implements Serializable {
     @Type(type = "uuid-char")
     private UUID id;
 
-    @Column(name = Constants.FIELD_NAME)
+    @Column(name = Constants.FIELD_NAME, nullable = false)
     private String name;
 
-    @Column(name = Constants.FIELD_INDEX)
+    @Column(name = Constants.FIELD_INDEX, nullable = false)
     private int index;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = Constants.FIELD_PRESENTATION_ID, nullable = false)
-    private Presentation presentation;
+    @JoinColumn(name = Constants.FIELD_PRESENTATION_ID)
+    protected Presentation presentation;
+
+
+    @OneToMany(mappedBy = Constants.FIELD_SLIDE, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Element> elements = new ArrayList<Element>();
 
 
     public Slide () {}
@@ -61,11 +67,19 @@ public class Slide implements Serializable {
         this.index = index;
     }
 
-    public Presentation getPresentationId() {
+
+    public void setElements (List<Element> items) {
+        elements = items;
+    }
+    public List<Element> getElements () {
+        return elements;
+    }
+
+    public Presentation getPresentation() {
         return presentation;
     }
 
-    public void setPresentationId(Presentation presentation) {
+    public void setPresentation(Presentation presentation) {
         this.presentation = presentation;
     }
 
@@ -90,6 +104,7 @@ public class Slide implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", index=" + index +
+                ", presentationId=" + presentation.getId() +
                 '}';
     }
 }

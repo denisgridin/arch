@@ -10,18 +10,18 @@ import java.util.Objects;
 import java.util.UUID;
 
 
-@Entity
+@Entity(name = Constants.ENTITY_LAYOUT_MAIN)
 public class Layout implements Serializable {
 
     @Id
     @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator",
-            parameters = @org.hibernate.annotations.Parameter(name = "property", value = "element"))
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Type(type = "uuid-char")
     protected UUID id;
 
     @OneToOne(optional = false)
-    @PrimaryKeyJoinColumn
+    @MapsId
+    @JoinColumn(name = Constants.FIELD_ELEMENT_ID)
     protected Element element;
 
     @Column(name = Constants.FIELD_X, nullable = false)
@@ -41,6 +41,14 @@ public class Layout implements Serializable {
 
 
     public Layout () { }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public void setElement (Element element) {
         this.element = element;

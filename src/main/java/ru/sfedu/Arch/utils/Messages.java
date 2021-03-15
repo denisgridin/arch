@@ -74,4 +74,6 @@ public class Messages {
     public static final String ERROR_COMMENT_CREATE = "Unable to create comment";
     public static final String ERROR_COMMENT_UPDATE = "Unable to update comment";
     public static final String ERROR_COMMENT_DELETE = "Unable to delete comment";
+    public static final String ERROR_ELEMENT_CREATE = "Unable to create element";
+    public static final String ERROR_ELEMENTS_GET = "Unable to get slide elements";
 }

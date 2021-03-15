@@ -6,9 +6,7 @@ import org.hibernate.dialect.lock.OptimisticEntityLockException;
 import org.junit.jupiter.api.Test;
 import ru.sfedu.Arch.Enums;
 import ru.sfedu.Arch.Result;
-import ru.sfedu.Arch.lab5.model.Comment;
-import ru.sfedu.Arch.lab5.model.Presentation;
-import ru.sfedu.Arch.lab5.model.Slide;
+import ru.sfedu.Arch.lab5.model.*;
 import ru.sfedu.Arch.utils.Messages;
 
 import java.sql.Date;
@@ -81,6 +79,94 @@ class ApiProviderTest {
             return api.addPresentationComment(comment, presentationId);
         } else {
             return new Result(Enums.STATUS.error, Messages.ERROR_SLIDE_CREATE);
+        }
+    }
+
+    private Result addShape () {
+        Result result = addSlide();
+        if (result.getStatus() == Enums.STATUS.success) {
+            Slide slide = (Slide) result.getReturnValue();
+
+            Shape shape = new Shape();
+
+            Enums.Figure figure = Enums.Figure.circle;
+            String text = "text";
+            Enums.ElementType elementType = Enums.ElementType.shape;
+            String name = "shape";
+
+            Style style = new Style();
+            style.setBorderStyle(Enums.BorderStyle.dashed);
+            style.setBorderColor("black");
+            style.setBorderRadius("1px");
+            style.setBorderWidth("1px");
+            style.setBoxShadow("none");
+            style.setOpacity("100%");
+            style.setFillColor("black");
+
+            Layout layout = new Layout();
+            layout.setHeight(100);
+            layout.setRotation(10);
+            layout.setWidth(100);
+            layout.setX(10);
+            layout.setY(20);
+
+            shape.setFigure(figure);
+            shape.setText(text);
+            shape.setStyle(style);
+            shape.setElementType(elementType);
+
+            layout.setElement(shape);
+            style.setShape(shape);
+
+            shape.setLayout(layout);
+            shape.setStyle(style);
+            shape.setName(name);
+
+            return api.addSlideShape(shape, slide.getId());
+        } else {
+            return new Result(Enums.STATUS.error, "");
+        }
+    }
+
+    private Result addContent () {
+        Result result = addSlide();
+        if (result.getStatus() == Enums.STATUS.success) {
+            Slide slide = (Slide) result.getReturnValue();
+
+            Content content = new Content();
+
+            String text = "text";
+            Enums.ElementType elementType = Enums.ElementType.content;
+            String name = "content";
+
+            Layout layout = new Layout();
+            layout.setHeight(100);
+            layout.setRotation(10);
+            layout.setWidth(100);
+            layout.setX(10);
+            layout.setY(20);
+
+            content.setText(text);
+            content.setElementType(elementType);
+
+            Font font = new Font();
+            font.setFontCase(Enums.FontCase.lowerCase);
+            font.setFontFamily("Roboto");
+            font.setFontSize("13px");
+            font.setLetterSpacing("23px");
+            font.setLineSpacing("12px");
+
+
+            font.setContent(content);
+            content.setFont(font);
+
+            layout.setElement(content);
+            content.setLayout(layout);
+            content.setName(name);
+
+            return api.addSlideContent(content, slide.getId());
+        } else {
+            return new Result(Enums.STATUS.error, "");
         }
     }
 
@@ -515,6 +601,68 @@ class ApiProviderTest {
         Result resultDelete = api.deleteComment(UUID.randomUUID());
         assertTrue(resultDelete.getStatus() == Enums.STATUS.error);
     }
+
+
+    /*            Element section           */
+
+    /**
+     * Add slide shape
+     * Type: Success
+     */
+    @Test
+    void addSlideShapeSuccess () {
+        Result result = addShape();
+        assertTrue(result.getStatus() == Enums.STATUS.success);
+    }
+
+    /**
+     * Add slide shape
+     * Type: Fail
+     */
+    @Test
+    void addSlideShapeFail () {
+        Result result = api.addSlideShape(new Shape(), UUID.randomUUID());
+        assertTrue(result.getStatus() == Enums.STATUS.error);
+    }
+
+    /**
+     * Add slide content
+     * Type: Success
+     */
+    @Test
+    void addSlideContentSuccess () {
+        Result result = addContent();
+        assertTrue(result.getStatus() == Enums.STATUS.success);
+    }
+
+    /**
+     * Add slide content
+     * Type: Fail
+     */
+    @Test
+    void addSlideContentFail () {
+        Result result = api.addSlideContent(new Content(), UUID.randomUUID());
+        assertTrue(result.getStatus() == Enums.STATUS.error);
+    }
+
+
+
+    @Test
+    void getSlideElements () {
+        Result result = addShape();
+
+        if (result.getStatus() == Enums.STATUS.success) {
+            Shape shape = (Shape) result.getReturnValue();
+            Slide slide = shape.getSlide();
+
+            Result resultGetElements = api.getSlideElements(slide.getId());
+            assertTrue(resultGetElements.getStatus() == Enums.STATUS.success);
+
+        } else {
+            fail();
+        }
+    }
+
 
 }
 

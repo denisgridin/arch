@@ -1,14 +1,26 @@
 package ru.sfedu.Arch.lab5.model;
 
+
+import ru.sfedu.Arch.Constants;
+import ru.sfedu.Arch.Enums;
+
+import javax.persistence.*;
 import java.util.Objects;
 
+
+@Entity(name = Constants.ENTITY_SHAPE_MAIN)
+@Table(name = Constants.TABLE_SHAPE_MAIN)
 public class Shape extends Element {
 
+
+    @OneToOne(mappedBy = "shape", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private Style style;
 
+    @Column(name = Constants.FIELD_TEXT, nullable = false)
     private String text;
 
-//    private Figure figure;
+    private Enums.Figure figure;
 
     public Shape() { }
 
@@ -21,7 +33,6 @@ public class Shape extends Element {
     }
 
 
-
     public void setStyle(Style style) {
         this.style = style;
     }
@@ -30,12 +41,12 @@ public class Shape extends Element {
         this.text = text;
     }
 
-//    public Figure getFigure() {
-//        return figure;
-//    }
-//    public void setFigure(Figure figure) {
-//        this.figure = figure;
-//    }
+    public Enums.Figure getFigure() {
+        return figure;
+    }
+    public void setFigure(Enums.Figure figure) {
+        this.figure = figure;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -56,10 +67,9 @@ public class Shape extends Element {
         return "Shape{" +
                 "style=" + style +
                 ", text='" + text + '\'' +
-//                ", figure=" + figure +
+                ", figure=" + figure +
                 ", id=" + getId() +
-//                ", presentationId=" + getPresentationId() +
-//                ", slideId=" + getSlideId() +
+                ", slideId=" + getSlide().getId() +
                 ", name=" + getName() +
                 ", layout=" + getLayout() +
                 '}';

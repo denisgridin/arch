@@ -103,4 +103,26 @@ public class Constants {
     public static final String TABLE_ASSESSMENT_MAIN = "assessment_main";
     public static final String ENTITY_ASSESSMENT_MAIN = "assessment_main";
     public static final String ENTITY_FEEDBACK_MAIN = "feedback_main";
+    public static final String ENTITY_SHAPE_MAIN = "shape_main";
+    public static final String TABLE_SHAPE_MAIN = "shape_main";
+    public static final String ENTITY_STYLE_MAIN = "style_main";
+    public static final String ENTITY_LAYOUT_MAIN = "layout_main";
+    public static final String FIELD_BOX_SHADOW = "box_shadow";
+    public static final String FIELD_OPACITY = "opacity";
+    public static final String FIELD_BORDER_COLOR = "border_color";
+    public static final String FIELD_BORDER_RADIUS = "border_radius";
+    public static final String FIELD_BORDER_WIDTH = "border_width";
+    public static final String FIELD_BORDER_STYLE = "border_style";
+    public static final String FIELD_LAYOUT_ID = "layout_id";
+    public static final String FIELD_ELEMENT = "element";
+    public static final String FIELD_ELEMENT_ID = "element_id";
+    public static final String FIELD_SHAPE_ID = "shape_id";
+    public static final String TABLE_CONTENT_MAIN = "content_main";
+    public static final String ENTITY_CONTENT_MAIN = "content_main";
+    public static final String ENTITY_FONT_MAIN = "font_main";
+    public static final String FIELD_CONTENT_ID = "content_id";
+    public static final String FIELD_FONT_SIZE = "font_size";
+    public static final String FIELD_LINE_SPACING = "line_spacing";
+    public static final String FIELD_LETTER_SPACING = "letter_spacing";
+    public static final String FIELD_FONT_CASE = "font_case";
 }

@@ -48,10 +48,32 @@ public class Enums {
     }
 
     public enum FontCase {
-        uppercase,
-        lowercase,
+        upperCase,
+        lowerCase,
         normal
     }
+
+
+
+    public enum Figure {
+        rectangle,
+        circle,
+        square,
+        line
+    }
+
+
+    public enum BorderStyle {
+        solid,
+        dashed,
+        dotted,
+        groove,
+        ridge,
+        inset,
+        outset,
+        none,
+    }
+
 
 
     public enum Mark {

@@ -1,24 +1,71 @@
 package ru.sfedu.Arch.lab5.model;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+import ru.sfedu.Arch.Constants;
+import ru.sfedu.Arch.Enums;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.UUID;
 
+
+@Entity(name = Constants.ENTITY_STYLE_MAIN)
 public class Style implements Serializable {
+
+
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = Constants.FIELD_ID, columnDefinition="uniqueidentifier")
+    @Type(type = "uuid-char")
+    private UUID id;
+
+
+    @OneToOne(optional = false)
+    @MapsId
+    @JoinColumn(name = Constants.FIELD_SHAPE_ID)
+    protected Shape shape;
+
+    @Column(name = Constants.FIELD_FILL_COLOR, nullable = false)
     private String fillColor;
 
+    @Column(name = Constants.FIELD_BOX_SHADOW, nullable = false)
     private String boxShadow;
 
+    @Column(name = Constants.FIELD_OPACITY, nullable = false)
     private String opacity;
 
+    @Column(name = Constants.FIELD_BORDER_COLOR, nullable = false)
     private String borderColor;
 
+    @Column(name = Constants.FIELD_BORDER_RADIUS, nullable = false)
     private String borderRadius;
 
+    @Column(name = Constants.FIELD_BORDER_WIDTH, nullable = false)
     private String borderWidth;
 
-//    private BorderStyle borderStyle;
+    @Column(name = Constants.FIELD_BORDER_STYLE  , nullable = false)
+    private Enums.BorderStyle borderStyle;
 
     public Style() { }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setShape(Shape shape) {
+        this.shape = shape;
+    }
+
+    public Shape getShape () {
+        return shape;
+    }
 
     public String getFillColor() {
         return fillColor;
@@ -67,14 +114,14 @@ public class Style implements Serializable {
     public void setBorderWidth(String borderWidth) {
         this.borderWidth = borderWidth;
     }
-//
-//    public BorderStyle getBorderStyle() {
-//        return borderStyle;
-//    }
-//
-//    public void setBorderStyle(BorderStyle borderStyle) {
-//        this.borderStyle = borderStyle;
-//    }
+
+    public Enums.BorderStyle getBorderStyle() {
+        return borderStyle;
+    }
+
+    public void setBorderStyle(Enums.BorderStyle borderStyle) {
+        this.borderStyle = borderStyle;
+    }
 
     @Override
     public boolean equals(Object o) {

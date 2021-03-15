@@ -31,6 +31,7 @@ public abstract class Element {
     private Enums.ElementType elementType;
 
     @OneToOne(mappedBy = "element", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     protected Layout layout;
 
     protected Element() { }

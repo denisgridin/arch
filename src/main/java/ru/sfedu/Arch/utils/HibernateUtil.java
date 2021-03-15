@@ -90,7 +90,11 @@ public class HibernateUtil {
             metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab5.model.Slide.class);
             metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab5.model.Comment.class);
             metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab5.model.Element.class);
+            metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab5.model.Shape.class);
             metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab5.model.Layout.class);
+            metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab5.model.Style.class);
+            metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab5.model.Content.class);
+            metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab5.model.Font.class);
         } catch (Exception e) {
             log.error(Messages.ERROR_ADD_ENTITIES);
         }

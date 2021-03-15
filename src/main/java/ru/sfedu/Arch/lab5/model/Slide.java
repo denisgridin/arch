@@ -105,6 +105,7 @@ public class Slide implements Serializable {
                 ", name='" + name + '\'' +
                 ", index=" + index +
                 ", presentationId=" + presentation.getId() +
+                ", elements=" + elements +
                 '}';
     }
 }

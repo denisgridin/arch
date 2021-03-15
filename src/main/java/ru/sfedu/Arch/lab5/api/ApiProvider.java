@@ -7,9 +7,7 @@ import org.hibernate.Transaction;
 import ru.sfedu.Arch.Enums;
 import ru.sfedu.Arch.Result;
 import ru.sfedu.Arch.lab3.EntityApi;
-import ru.sfedu.Arch.lab5.model.Comment;
-import ru.sfedu.Arch.lab5.model.Presentation;
-import ru.sfedu.Arch.lab5.model.Slide;
+import ru.sfedu.Arch.lab5.model.*;
 import ru.sfedu.Arch.utils.EventWrapper;
 import ru.sfedu.Arch.utils.Messages;
 
@@ -274,6 +272,80 @@ public class ApiProvider extends EntityApi {
             event.error(1, error);
             event.error(2, Messages.ERROR_COMMENT_DELETE);
             return new Result(Enums.STATUS.error, Messages.ERROR_COMMENT_DELETE);
+        }
+    }
+
+    /*        Shape section          */
+
+    public Result getSlideElements (UUID slideId) {
+        try {
+            Result resultGetSlide = getSlideById(slideId);
+            if (resultGetSlide.getStatus() == Enums.STATUS.success) {
+                Optional<Slide> optionalSlide = (Optional<Slide>) resultGetSlide.getReturnValue();
+                Slide slide = optionalSlide.get();
+
+                return new Result(Enums.STATUS.success, slide.getElements());
+            } else {
+                return resultGetSlide;
+            }
+        } catch (Exception error) {
+            event.error( 1, error);
+            event.error(2, Messages.ERROR_ELEMENTS_GET);
+            return new Result(Enums.STATUS.error, Messages.ERROR_ELEMENTS_GET);
+        }
+    }
+
+
+    public Result addSlideShape(Shape shape, UUID slideId) {
+        try {
+            event.info(2, String.format(Messages.SHOW_BEAN, slideId));
+            Result result = getSlideById(slideId);
+            if (result.getStatus() == Enums.STATUS.success) {
+                Optional<Slide> optionalSlide = (Optional<Slide>) result.getReturnValue();
+                Slide slide = optionalSlide.get();
+                shape.setSlide(slide);
+                Session s = getSession();
+                Transaction transaction = s.beginTransaction();
+                event.debug(1, slide);
+                s.persist(shape);
+                transaction.commit();
+                s.close();
+
+                return new Result(Enums.STATUS.success, shape);
+            } else {
+                return result;
+            }
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_ELEMENT_CREATE);
+            return new Result(Enums.STATUS.error, Messages.ERROR_ELEMENT_CREATE);
+        }
+    }
+
+
+    public Result addSlideContent(Content content, UUID slideId) {
+        try {
+            event.info(2, String.format(Messages.SHOW_BEAN, slideId));
+            Result result = getSlideById(slideId);
+            if (result.getStatus() == Enums.STATUS.success) {
+                Optional<Slide> optionalSlide = (Optional<Slide>) result.getReturnValue();
+                Slide slide = optionalSlide.get();
+                content.setSlide(slide);
+                Session s = getSession();
+                Transaction transaction = s.beginTransaction();
+                event.debug(1, slide);
+                s.persist(content);
+                transaction.commit();
+                s.close();
+
+                return new Result(Enums.STATUS.success, content);
+            } else {
+                return result;
+            }
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_ELEMENT_CREATE);
+            return new Result(Enums.STATUS.error, Messages.ERROR_ELEMENT_CREATE);
         }
     }
 }

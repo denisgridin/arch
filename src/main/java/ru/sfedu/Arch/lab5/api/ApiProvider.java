@@ -142,4 +142,43 @@ public class ApiProvider extends EntityApi {
             return new Result(Enums.STATUS.error, Messages.ERROR_SLIDE_CREATE);
         }
     }
+
+    public Result getSlideById (UUID slideId) {
+        try {
+            event.info(2, String.format(Messages.SHOW_BEAN, slideId));
+            return getBeanById(Slide.class, slideId);
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_SLIDE_GET);
+            return new Result(Enums.STATUS.error, Messages.ERROR_SLIDE_GET);
+        }
+    }
+
+    public Result updateSlide (Slide slide) {
+        try {
+            return updateBean(slide);
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_SLIDE_UPDATE);
+            return new Result(Enums.STATUS.error, Messages.ERROR_SLIDE_UPDATE);
+        }
+    }
+
+    public Result deleteSlide (UUID slideId) {
+        try {
+            Result result = getSlideById(slideId);
+
+            if (result.getStatus() == Enums.STATUS.success) {
+                Optional<Slide> optionalSlide = (Optional<Slide>) result.getReturnValue();
+                Slide slide = optionalSlide.get();
+                return deleteBean(slide);
+            } else {
+                return result;
+            }
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_SLIDE_DELETE);
+            return new Result(Enums.STATUS.error, Messages.ERROR_SLIDE_DELETE);
+        }
+    }
 }

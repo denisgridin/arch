@@ -8,6 +8,7 @@ import ru.sfedu.Arch.Enums;
 import ru.sfedu.Arch.Result;
 import ru.sfedu.Arch.lab5.model.Presentation;
 import ru.sfedu.Arch.lab5.model.Slide;
+import ru.sfedu.Arch.utils.Messages;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,25 @@ class ApiProviderTest {
         Result result = api.savePresentation(presentation);
 
         return new Result(result.getStatus(), presentation);
+    }
+
+
+    private Result addSlide () {
+        Result resultAddPresentation = addPresentation();
+
+        if (resultAddPresentation.getStatus() == Enums.STATUS.success) {
+            Presentation presentation = (Presentation) resultAddPresentation.getReturnValue();
+            String name = "Slide name 123";
+            int index = 1;
+            UUID presentationId = presentation.getId();
+
+            Slide slide = new Slide();
+            slide.setName(name);
+            slide.setIndex(index);
+            return api.addPresentationSlide(slide, presentationId);
+        } else {
+            return new Result(Enums.STATUS.error, Messages.ERROR_SLIDE_CREATE);
+        }
     }
 
 
@@ -231,4 +251,120 @@ class ApiProviderTest {
     }
 
 
+    /**
+     * Get presentation slide
+     * Type: Success
+     */
+    @Test
+    void getSlideByIdSuccess () {
+        Result resultAddPresentation = addPresentation();
+
+        if (resultAddPresentation.getStatus() == Enums.STATUS.success) {
+            Presentation presentation = (Presentation) resultAddPresentation.getReturnValue();
+            String name = "Slide name 123";
+            int index = 1;
+            UUID presentationId = presentation.getId();
+
+            Slide slide = new Slide();
+            slide.setName(name);
+            slide.setIndex(index);
+            Result result = api.addPresentationSlide(slide, presentationId);
+
+            if (result.getStatus() == Enums.STATUS.success) {
+                Slide item = (Slide) result.getReturnValue();
+                UUID id = item.getId();
+                Result resultGetSlide = api.getSlideById(id);
+                assertTrue(resultGetSlide.getStatus() == Enums.STATUS.success);
+            } else {
+                fail();
+            }
+        } else fail();
+    }
+
+    /**
+     * Get presentation slide
+     * Type: Fail
+     */
+    @Test
+    void getSlideByIdFail () {
+        Result resultGetSlide = api.getSlideById(UUID.randomUUID());
+        assertTrue(resultGetSlide.getStatus() == Enums.STATUS.error);
+    }
+
+
+    /**
+     * Update presentation slide
+     * Type: Success
+     */
+    @Test
+    void updateSlideSuccess () {
+        Result result = addSlide();
+
+        if (result.getStatus() == Enums.STATUS.success) {
+            Slide slide = (Slide) result.getReturnValue();
+
+            String name = "Slide edited name";
+            int index = 2;
+
+            slide.setName(name);
+            slide.setIndex(index);
+
+            Result resultUpdate = api.updateSlide(slide);
+
+            assertTrue(resultUpdate.getStatus() == Enums.STATUS.success);
+
+            Result resultGetSlide = api.getSlideById(slide.getId());
+            if (resultGetSlide.getStatus() == Enums.STATUS.success) {
+                Optional<Slide> optionalSlide = (Optional<Slide>) resultGetSlide.getReturnValue();
+                Slide item = optionalSlide.get();
+
+                assertEquals(item.getName(), slide.getName());
+                assertEquals(item.getIndex(), slide.getIndex());
+
+            } else {
+                fail();
+            }
+        } else {
+            fail();
+        }
+    }
+
+
+    /**
+     * Update presentation slide
+     * Type: Fail
+     */
+    @Test
+    void updateSlideFail () {
+        Result resultUpdate = api.updateSlide(new Slide());
+        assertTrue(resultUpdate.getStatus() == Enums.STATUS.error);
+    }
+
+
+
+    /**
+     * Delete presentation slide
+     * Type: Success
+     */
+    @Test
+    void deleteSlideSuccess () {
+        Result result = addSlide();
+        if (result.getStatus() == Enums.STATUS.success) {
+            Slide slide = (Slide) result.getReturnValue();
+            Result resultDelete = api.deleteSlide(slide.getId());
+            assertTrue(resultDelete.getStatus() == Enums.STATUS.success);
+        } else {
+            fail();
+        }
+    }
+
+    /**
+     * Delete presentation slide
+     * Type: Fail
+     */
+    @Test
+    void deleteSlideFail () {
+        Result resultDelete = api.deleteSlide(UUID.randomUUID());
+        assertTrue(resultDelete.getStatus() == Enums.STATUS.error);
+    }
 }

@@ -84,4 +84,8 @@ public class Constants {
     public static final String TABLE_COMMENTS_TABLE_PER_CLASS = "comment_table_per_class";
     public static final String ENTITY_FEEDBACK_TABLE_PER_CLASS = "feedback_table_per_class";
     public static final String FIELD_PRESENTATION = "presentation";
+    public static final String PRESENTATION_MAIN = "presentation_main";
+    public static final String TABLE_PRESENTATION_MAIN = "presentation_main";
+    public static final String ENTITY_SLIDE_MAIN = "slide_main";
+    public static final String TABLE_ENTITY_SLIDE_MAIN = "slide_main";
 }

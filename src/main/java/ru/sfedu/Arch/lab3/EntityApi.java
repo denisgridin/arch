@@ -52,6 +52,7 @@ public class EntityApi {
             UUID id = (UUID) session.save(bean);
             event.debug(2, String.format(Messages.COMMIT_BEAN, id));
             transaction.commit();
+            session.close();
             return new Result(Enums.STATUS.success, id);
         } catch (Exception e) {
             event.error(1, e);
@@ -102,6 +103,7 @@ public class EntityApi {
                 event.debug(1, String.format(Messages.UPDATE_BEAN_FORMAT, bean));
                 session.update(bean);
                 transaction.commit();
+                session.close();
                 return new Result(Enums.STATUS.success, Messages.SUCCESS_BEAN_UPDATED);
             } else {
                 event.error(1, Messages.ERROR_GET_SESSION);
@@ -127,6 +129,7 @@ public class EntityApi {
                 event.debug(1, String.format(Messages.DELETE_BEAN_FORMAT, bean));
                 session.delete(bean);
                 transaction.commit();
+                session.close();
                 return new Result(Enums.STATUS.success, Messages.SUCCESS_BEAN_DELETED);
             } else {
                 event.error(1, Messages.ERROR_GET_SESSION);

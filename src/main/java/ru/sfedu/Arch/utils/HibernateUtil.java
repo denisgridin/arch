@@ -85,6 +85,9 @@ public class HibernateUtil {
 
             metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab4.mapCollection.model.Presentation.class);
             metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab4.mapCollection.model.Slide.class);
+
+            metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab5.model.Presentation.class);
+            metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab5.model.Slide.class);
         } catch (Exception e) {
             log.error(Messages.ERROR_ADD_ENTITIES);
         }

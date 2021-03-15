@@ -646,9 +646,12 @@ class ApiProviderTest {
     }
 
 
-
+    /**
+     * Add slide content
+     * Type: Success
+     */
     @Test
-    void getSlideElements () {
+    void getSlideElementsSuccess () {
         Result result = addShape();
 
         if (result.getStatus() == Enums.STATUS.success) {
@@ -663,6 +666,96 @@ class ApiProviderTest {
         }
     }
 
+    /**
+     * Add slide content
+     * Type: Fail
+     */
+    @Test
+    void getSlideElementsFail() {
+        Result resultGetElements = api.getSlideElements(UUID.randomUUID());
+        assertTrue(resultGetElements.getStatus() == Enums.STATUS.error);
+    }
 
+    /**
+     * Update slide element
+     * Type: Success
+     */
+    @Test
+    void updateSlideElementByIdSuccess () {
+        Result result = addContent();
+
+        if (result.getStatus() == Enums.STATUS.success) {
+            Content content = (Content) result.getReturnValue();
+
+            String name = "edited name";
+            String text = "edited text";
+
+            content.setName(name);
+            content.setText(text);
+
+            Result resultUpdate = api.updateSlideElement(content, content.getSlide().getId());
+            assertTrue(resultUpdate.getStatus() == Enums.STATUS.success);
+        } else {
+            fail();
+        }
+    }
+
+
+    /**
+     * Update slide element
+     * Type: Fail
+     */
+    @Test
+    void updateSlideElementByIdFail () {
+        Result resultUpdate = api.updateSlideElement(new Content(), UUID.randomUUID());
+        assertTrue(resultUpdate.getStatus() == Enums.STATUS.error);
+    }
+
+    /**
+     * Delete slide element - content
+     * Type: Success
+     */
+    @Test
+    void deleteSlideElementContentSuccess () {
+        Result result = addContent();
+
+        if (result.getStatus() == Enums.STATUS.success) {
+            Content content = (Content) result.getReturnValue();
+
+            Result resultRemove = api.deleteSlideElement(content.getId());
+            assertTrue(resultRemove.getStatus() == Enums.STATUS.success);
+        } else {
+            fail();
+        }
+    }
+
+
+    /**
+     * Delete slide element - shape
+     * Type: Success
+     */
+    @Test
+    void deleteSlideElementShapeSuccess () {
+        Result result = addShape();
+
+        if (result.getStatus() == Enums.STATUS.success) {
+            Shape shape = (Shape) result.getReturnValue();
+
+            Result resultRemove = api.deleteSlideElement(shape.getId());
+            assertTrue(resultRemove.getStatus() == Enums.STATUS.success);
+        } else {
+            fail();
+        }
+    }
+
+    /**
+     * Delete slide element
+     * Type: Fail
+     */
+    @Test
+    void deleteSlideElementFail () {
+        Result resultRemove = api.deleteSlideElement(UUID.randomUUID());
+        assertTrue(resultRemove.getStatus() == Enums.STATUS.error);
+    }
 }
 

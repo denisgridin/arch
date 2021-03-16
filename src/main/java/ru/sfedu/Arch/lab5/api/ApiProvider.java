@@ -111,6 +111,14 @@ public class ApiProvider extends EntityApi {
         }
     }
 
+
+
+    /**
+     * Add slides in data source
+     * @param slide - Slide bean
+     * @param presentationId - presentation identifier
+     * @return Result - result of execution
+     */
     public Result addPresentationSlide (Slide slide, UUID presentationId) {
         try {
 
@@ -140,6 +148,12 @@ public class ApiProvider extends EntityApi {
         }
     }
 
+
+    /**
+     * Retrieve slide data source by id
+     * @param slideId - Slide id
+     * @return Result - result of execution
+     */
     public Result getSlideById (UUID slideId) {
         try {
             event.info(2, String.format(Messages.SHOW_BEAN, slideId));
@@ -151,6 +165,11 @@ public class ApiProvider extends EntityApi {
         }
     }
 
+    /**
+     * Updating slide in data source
+     * @param slide - updated Slide bean
+     * @return Result - result of execution
+     */
     public Result updateSlide (Slide slide) {
         try {
             return updateBean(slide);
@@ -161,6 +180,12 @@ public class ApiProvider extends EntityApi {
         }
     }
 
+
+    /**
+     * Remove slide from data source
+     * @param slideId - slide id
+     * @return Result - result of execution
+     */
     public Result deleteSlide (UUID slideId) {
         try {
             Result result = getSlideById(slideId);
@@ -205,6 +230,13 @@ public class ApiProvider extends EntityApi {
         }
     }
 
+
+    /**
+     * Add comment in data source
+     * @param comment - Comment bean
+     * @param presentationId - presentation identifier
+     * @return Result - result of execution
+     */
     public Result addPresentationComment (Comment comment, UUID presentationId) {
         try {
 
@@ -234,6 +266,12 @@ public class ApiProvider extends EntityApi {
         }
     }
 
+
+    /**
+     * Get comment from data source
+     * @param commentId - Comment id
+     * @return Result - result of execution
+     */
     public Result getCommentById (UUID commentId) {
         try {
             event.info(2, String.format(Messages.SHOW_BEAN, commentId));
@@ -245,6 +283,12 @@ public class ApiProvider extends EntityApi {
         }
     }
 
+
+    /**
+     * Updating comment in data source
+     * @param comment - Comment bean
+     * @return Result - result of execution
+     */
     public Result updateComment (Comment comment) {
         try {
             return updateBean(comment);
@@ -255,6 +299,12 @@ public class ApiProvider extends EntityApi {
         }
     }
 
+
+    /**
+     * Remove comment from data source
+     * @param commentId - Comment id
+     * @return Result - result of execution
+     */
     public Result deleteComment (UUID commentId) {
         try {
             Result result = getCommentById(commentId);
@@ -275,6 +325,12 @@ public class ApiProvider extends EntityApi {
 
     /*        Shape section          */
 
+
+    /**
+     * Get slide elements from data source
+     * @param slideId - Slide id
+     * @return Result - result of execution
+     */
     public Result getSlideElements (UUID slideId) {
         try {
             Result resultGetSlide = getSlideById(slideId);
@@ -293,7 +349,12 @@ public class ApiProvider extends EntityApi {
         }
     }
 
-
+    /**
+     * Add shape in slide
+     * @param shape - Shape bean
+     * @param slideId - parent Slide id
+     * @return Result - result of execution
+     */
     public Result addSlideShape(Shape shape, UUID slideId) {
         try {
             event.info(2, String.format(Messages.SHOW_BEAN, slideId));
@@ -320,7 +381,12 @@ public class ApiProvider extends EntityApi {
         }
     }
 
-
+    /**
+     * Add content in slide
+     * @param content - Content bean
+     * @param slideId - parent Slide id
+     * @return Result - result of execution
+     */
     public Result addSlideContent(Content content, UUID slideId) {
         try {
             event.info(2, String.format(Messages.SHOW_BEAN, slideId));
@@ -347,6 +413,13 @@ public class ApiProvider extends EntityApi {
         }
     }
 
+
+    /**
+     * Add content in slide
+     * @param element - Element bean
+     * @param slideId - parent Slide id
+     * @return Result - result of execution
+     */
     public Result updateSlideElement (Element element, UUID slideId) {
         try {
             return updateBean(element);
@@ -357,6 +430,12 @@ public class ApiProvider extends EntityApi {
         }
     }
 
+
+    /**
+     * Get slide element
+     * @param id - element id
+     * @return Result - result of execution
+     */
     public Result getSlideElementById (UUID id) {
         try {
             event.info(1, String.format(Messages.SHOW_BEAN, id));
@@ -368,6 +447,12 @@ public class ApiProvider extends EntityApi {
         }
     }
 
+
+    /**
+     * Remove element from slide
+     * @param id - id of element
+     * @return Result - result of execution
+     */
     public Result deleteSlideElement (UUID id) {
         try {
             Result result = getSlideElementById(id);
@@ -388,7 +473,11 @@ public class ApiProvider extends EntityApi {
 
     /*                Assessments section                   */
 
-
+    /**
+     * Generate assessment
+     * @param presentationId - id of presentation
+     * @return Result - result of execution
+     */
     public Result generateAssessments (UUID presentationId) {
         try {
             Result result = getPresentationById(presentationId);
@@ -426,6 +515,12 @@ public class ApiProvider extends EntityApi {
         }
     }
 
+
+    /**
+     * Get assessment by id
+     * @param id - id of assessment
+     * @return Result - result of execution
+     */
     public Result getAssessmentById (UUID id) {
         try {
             event.info(1, String.format(Messages.SHOW_BEAN, id));
@@ -437,7 +532,11 @@ public class ApiProvider extends EntityApi {
         }
     }
 
-
+    /**
+     * Update assessment
+     * @param assessment - Assessment bean
+     * @return Result - result of execution
+     */
     public Result updateAssessment (Assessment assessment) {
         try {
             return updateBean(assessment);
@@ -448,6 +547,12 @@ public class ApiProvider extends EntityApi {
         }
     }
 
+
+    /**
+     * Remove assessment
+     * @param id - Assessment id
+     * @return Result - result of execution
+     */
     public Result deleteAssessment (UUID id) {
         try {
             Result result = getAssessmentById(id);

@@ -2,7 +2,6 @@ package ru.sfedu.Arch.lab5.api;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.dialect.lock.OptimisticEntityLockException;
 import org.junit.jupiter.api.Test;
 import ru.sfedu.Arch.Enums;
 import ru.sfedu.Arch.Result;
@@ -10,8 +9,6 @@ import ru.sfedu.Arch.lab5.model.*;
 import ru.sfedu.Arch.utils.Messages;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -245,7 +242,7 @@ class ApiProviderTest {
 
         if (resultAddPresentation.getStatus() == Enums.STATUS.success) {
             Presentation presentation = (Presentation) resultAddPresentation.getReturnValue();
-            Result result = api.deletePresentationById(UUID.fromString("CE99613D-C9C3-4D1F-85A0-6C0200547C18"));
+            Result result = api.deletePresentationById(presentation.getId());
 
             assertTrue(result.getStatus() == Enums.STATUS.success);
         } else {
@@ -322,7 +319,7 @@ class ApiProviderTest {
 
         if (resultAddPresentation.getStatus() == Enums.STATUS.success) {
             Presentation presentation = (Presentation) resultAddPresentation.getReturnValue();
-            Result result = api.getPresentationSlides(UUID.fromString("B4319BAB-21BA-4563-841E-B209B6976119"));
+            Result result = api.getPresentationSlides(presentation.getId());
             assertTrue(result.getStatus() == Enums.STATUS.success);
         } else fail();
     }
@@ -334,7 +331,7 @@ class ApiProviderTest {
     @Test
     void getPresentationSlidesFail() {
         Result result = api.getPresentationSlides(UUID.randomUUID());
-        assertTrue(result.getStatus() == Enums.STATUS.success);
+        assertTrue(result.getStatus() == Enums.STATUS.error);
     }
 
 
@@ -351,7 +348,7 @@ class ApiProviderTest {
                 Presentation presentation = (Presentation) resultAddPresentation.getReturnValue();
                 String name = "Slide name 123";
                 int index = 1;
-                UUID presentationId = UUID.fromString("B4319BAB-21BA-4563-841E-B209B6976119");
+                UUID presentationId = presentation.getId();
 
                 Slide slide = new Slide();
                 slide.setName(name);

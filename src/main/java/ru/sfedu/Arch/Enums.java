@@ -121,4 +121,33 @@ public class Enums {
         guest
     }
 
+    public enum METHODS_LAB_5 {
+        savePresentation,
+        getPresentationById,
+        deletePresentationById,
+        updatePresentation,
+        getPresentationSlides,
+        addPresentationSlide,
+        getSlideById,
+        updateSlide,
+        deleteSlide,
+        getPresentationComments,
+        addPresentationComment,
+        getCommentById,
+        updateComment,
+        deleteComment,
+        getSlideElements,
+        addSlideShape,
+        addSlideContent,
+        updateSlideElement,
+        getSlideElementById,
+        deleteSlideElement,
+        generateAssessments,
+        getAssessmentById,
+        updateAssessment,
+        deleteAssessment,
+        getSummaryCriteria,
+        getSummaryHQL,
+        getSummaryNative,
+    }
 }

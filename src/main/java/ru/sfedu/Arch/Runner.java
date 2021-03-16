@@ -7,6 +7,7 @@ import ru.sfedu.Arch.lab1.api.Api1;
 import ru.sfedu.Arch.lab2.api.Api2;
 import ru.sfedu.Arch.lab2.model.TestEntity;
 import ru.sfedu.Arch.lab4.CollectionApi;
+import ru.sfedu.Arch.lab5.api.CLIProvider;
 import ru.sfedu.Arch.utils.Messages;
 
 import java.util.HashMap;
@@ -35,6 +36,9 @@ public class Runner {
                 case LAB4: {
                     return runFourthLab(method, args);
                 }
+                case LAB5: {
+                    return CLIProvider.run(method, args);
+                }
                 default: {
                     log.error(Messages.ERROR_CANT_FIND_METHOD_OR_LAB);
                     return new Result(Enums.STATUS.error, Messages.ERROR_CANT_FIND_METHOD_OR_LAB);
@@ -46,6 +50,8 @@ public class Runner {
             return new Result(Enums.STATUS.error, Messages.ERROR_METHOD_RUN);
         }
     }
+
+
 
     private Result runFourthLab(String method, HashMap args) {
         try {

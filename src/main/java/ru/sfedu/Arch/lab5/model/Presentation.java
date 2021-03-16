@@ -33,10 +33,10 @@ public class Presentation implements Serializable {
     @Column(name = Constants.FIELD_FONT_FAMILY, nullable = false)
     private String fontFamily;
 
-    @OneToMany(mappedBy = Constants.FIELD_PRESENTATION, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = Constants.FIELD_PRESENTATION, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Slide> slides = new ArrayList<Slide>();
 
-    @OneToMany(mappedBy = Constants.FIELD_PRESENTATION, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = Constants.FIELD_PRESENTATION, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<Comment>();
 
 

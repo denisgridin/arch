@@ -35,7 +35,7 @@ public class Slide implements Serializable {
     protected Presentation presentation;
 
 
-    @OneToMany(mappedBy = Constants.FIELD_SLIDE, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = Constants.FIELD_SLIDE, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Element> elements = new ArrayList<Element>();
 
 

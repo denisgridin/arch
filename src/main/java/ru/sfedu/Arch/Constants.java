@@ -125,4 +125,7 @@ public class Constants {
     public static final String FIELD_LINE_SPACING = "line_spacing";
     public static final String FIELD_LETTER_SPACING = "letter_spacing";
     public static final String FIELD_FONT_CASE = "font_case";
+    public static final String TABLE_PRESENTATION_ASSESSMENT = "presentation_assessment";
+    public static final String FIELD_ASSESSMENT_ID = "assessment_id";
+    public static final String FIELD_PRESENTATIONS = "presentations";
 }

@@ -95,6 +95,7 @@ public class HibernateUtil {
             metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab5.model.Style.class);
             metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab5.model.Content.class);
             metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab5.model.Font.class);
+            metadataSources.addAnnotatedClass(ru.sfedu.Arch.lab5.model.Assessment.class);
         } catch (Exception e) {
             log.error(Messages.ERROR_ADD_ENTITIES);
         }

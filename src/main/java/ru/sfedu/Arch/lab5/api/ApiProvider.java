@@ -11,9 +11,7 @@ import ru.sfedu.Arch.lab5.model.*;
 import ru.sfedu.Arch.utils.EventWrapper;
 import ru.sfedu.Arch.utils.Messages;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class ApiProvider extends EntityApi {
     private static final Logger logger = LogManager.getLogger(ApiProvider.class);
@@ -384,6 +382,86 @@ public class ApiProvider extends EntityApi {
             event.error(1, error);
             event.error(2, Messages.ERROR_COMMENT_UPDATE);
             return new Result(Enums.STATUS.error, Messages.ERROR_COMMENT_UPDATE);
+        }
+    }
+
+
+    /*                Assessments section                   */
+
+
+    public Result generateAssessments (UUID presentationId) {
+        try {
+            Result result = getPresentationById(presentationId);
+            if (result.getStatus() == Enums.STATUS.success) {
+                Optional<Presentation> optionalPresentation = (Optional<Presentation>) result.getReturnValue();
+                Presentation presentation = optionalPresentation.get();
+
+                Session s = getSession();
+                Transaction transaction = s.beginTransaction();
+                Set<Assessment> assessments = presentation.getAssessments();
+
+                Assessment assessment = new Assessment();
+                assessment.setMark(Enums.Mark.bad);
+                assessment.setRole(Enums.Role.editor);
+
+                Set<Presentation> presentationSet = new HashSet();
+                presentationSet.add(presentation);
+                assessments.add(assessment);
+
+                assessment.setPresentations(presentationSet);
+                presentation.setAssessments(assessments);
+                s.persist(assessment);
+                s.merge(presentation);
+                transaction.commit();
+                s.close();
+                return new Result(Enums.STATUS.success, assessment);
+            } else {
+                return result;
+            }
+
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_ADD_ENTITIES);
+            return new Result(Enums.STATUS.error, Messages.ERROR_ADD_ENTITIES);
+        }
+    }
+
+    public Result getAssessmentById (UUID id) {
+        try {
+            event.info(1, String.format(Messages.SHOW_BEAN, id));
+            return getBeanById(Assessment.class, id);
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_ASSESSMENT_GET);
+            return new Result(Enums.STATUS.error, Messages.ERROR_ASSESSMENT_GET);
+        }
+    }
+
+
+    public Result updateAssessment (Assessment assessment) {
+        try {
+            return updateBean(assessment);
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_ASSESSMENT_UPDATE);
+            return new Result(Enums.STATUS.error, Messages.ERROR_ASSESSMENT_UPDATE);
+        }
+    }
+
+    public Result deleteAssessment (UUID id) {
+        try {
+            Result result = getAssessmentById(id);
+            if (result.getStatus() == Enums.STATUS.success) {
+                Optional<Assessment> optionalAssessment = (Optional<Assessment>) result.getReturnValue();
+                Assessment assessment = optionalAssessment.get();
+                return deleteBean(assessment);
+            } else {
+                return result;
+            }
+        } catch (Exception error) {
+            event.error(1, error);
+            event.error(2, Messages.ERROR_ASSESSMENT_UPDATE);
+            return new Result(Enums.STATUS.error, Messages.ERROR_ASSESSMENT_UPDATE);
         }
     }
 }

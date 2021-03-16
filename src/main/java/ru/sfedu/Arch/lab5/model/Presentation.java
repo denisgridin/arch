@@ -37,9 +37,19 @@ public class Presentation implements Serializable {
     private List<Slide> slides = new ArrayList<Slide>();
 
     @OneToMany(mappedBy = Constants.FIELD_PRESENTATION, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private List<Comment> comments = new ArrayList<Comment>();;
-//
-//    private HashMap marks;
+    private List<Comment> comments = new ArrayList<Comment>();
+
+
+    @ManyToMany(mappedBy = Constants.FIELD_PRESENTATIONS, cascade = CascadeType.MERGE)
+    protected Set<Assessment> assessments = new HashSet<Assessment>();
+
+    public Set<Assessment> getAssessments() {
+        return assessments;
+    }
+
+    public void setAssessments(Set<Assessment> assessments) {
+        this.assessments = assessments;
+    }
 
     public UUID getId() {
         return id;
@@ -115,6 +125,7 @@ public class Presentation implements Serializable {
                 ", fontFamily='" + fontFamily + '\'' +
                 ", slides=" + getSlides()  +
                 ", comments=" + getComments()  +
+                ", assessments=" + getAssessments()  +
                 '}';
         return formatReturn;
     }

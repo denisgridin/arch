@@ -170,6 +170,18 @@ class ApiProviderTest {
         }
     }
 
+    private Result addAssessment () {
+        Result result = addPresentation();
+
+        if (result.getStatus() == Enums.STATUS.success) {
+            Presentation presentation = (Presentation) result.getReturnValue();
+
+            return api.generateAssessments(presentation.getId());
+        } else {
+            return new Result(Enums.STATUS.error, "");
+        }
+    }
+
 
     /**
      * Creating of presentation
@@ -756,6 +768,115 @@ class ApiProviderTest {
     void deleteSlideElementFail () {
         Result resultRemove = api.deleteSlideElement(UUID.randomUUID());
         assertTrue(resultRemove.getStatus() == Enums.STATUS.error);
+    }
+
+
+    /**
+     * Assessments generating
+     * Type: Success
+     */
+    @Test
+    void generateAssessmentsSuccess() {
+        Result resultGenerateAssessments = addAssessment();
+        assertTrue(resultGenerateAssessments.getStatus() == Enums.STATUS.success);
+    }
+
+    /**
+     * Assessments generating
+     * Type: Fail
+     */
+    @Test
+    void generateAssessmentsFail () {
+        Result resultGenerateAssessments = api.generateAssessments(UUID.randomUUID());
+        assertTrue(resultGenerateAssessments.getStatus() == Enums.STATUS.error);
+    }
+
+
+    /**
+     * Get assessment by id
+     * Type: Success
+     */
+    @Test
+    void getAssessmentByIdSuccess () {
+        Result resultGenerateAssessments = addAssessment();
+
+        if (resultGenerateAssessments.getStatus() == Enums.STATUS.success) {
+            Assessment assessment = (Assessment) resultGenerateAssessments.getReturnValue();
+
+            Result result = api.getAssessmentById(assessment.getId());
+            assertTrue(result.getStatus() == Enums.STATUS.success);
+        } else {
+            fail();
+        }
+    }
+
+    /**
+     * Get assessment by id
+     * Type: Fail
+     */
+    @Test
+    void getAssessmentByIdFail () {
+        Result result = api.getAssessmentById(UUID.randomUUID());
+        assertTrue(result.getStatus() == Enums.STATUS.error);
+    }
+
+
+    /**
+     * Update assessment
+     * Type: Success
+     */
+    @Test
+    void updateAssessmentSuccess () {
+        Result resultGenerateAssessments = addAssessment();
+
+        if (resultGenerateAssessments.getStatus() == Enums.STATUS.success) {
+            Assessment assessment = (Assessment) resultGenerateAssessments.getReturnValue();
+            assessment.setMark(Enums.Mark.excellent);
+
+            Result result = api.updateAssessment(assessment);
+            assertTrue(result.getStatus() == Enums.STATUS.success);
+        } else {
+            fail();
+        }
+    }
+
+    /**
+     * Update assessment
+     * Type: Fail
+     */
+    @Test
+    void updateAssessmentFail () {
+        Result result = api.updateAssessment(new Assessment());
+        assertTrue(result.getStatus() == Enums.STATUS.error);
+    }
+
+    /**
+     * Update assessment
+     * Type: Success
+     */
+    @Test
+    void deleteAssessmentSuccess () {
+        Result resultGenerateAssessments = addAssessment();
+
+        if (resultGenerateAssessments.getStatus() == Enums.STATUS.success) {
+            Assessment assessment = (Assessment) resultGenerateAssessments.getReturnValue();
+            assessment.setMark(Enums.Mark.excellent);
+
+            Result result = api.deleteAssessment(assessment.getId());
+            assertTrue(result.getStatus() == Enums.STATUS.success);
+        } else {
+            fail();
+        }
+    }
+
+    /**
+     * Update assessment
+     * Type: Fail
+     */
+    @Test
+    void deleteAssessmentFail () {
+        Result result = api.deleteAssessment(UUID.randomUUID());
+        assertTrue(result.getStatus() == Enums.STATUS.error);
     }
 }
 

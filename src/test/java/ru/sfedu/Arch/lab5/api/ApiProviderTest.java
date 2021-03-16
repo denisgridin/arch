@@ -875,5 +875,23 @@ class ApiProviderTest {
         Result result = api.deleteAssessment(UUID.randomUUID());
         assertTrue(result.getStatus() == Enums.STATUS.error);
     }
+
+    @Test
+    void getSummaryCriteria () {
+        Result result = api.getSummaryCriteria();
+        assertTrue(result.getStatus() == Enums.STATUS.success);
+    }
+
+    @Test
+    void getSummaryHQL () {
+        Result result = api.getSummaryHQL();
+        assertTrue(result.getStatus() == Enums.STATUS.success);
+    }
+
+    @Test
+    void getSummaryNative () {
+        Result result = api.getSummaryNative();
+        assertTrue(result.getStatus() == Enums.STATUS.success);
+    }
 }
 

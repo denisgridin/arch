@@ -128,4 +128,6 @@ public class Constants {
     public static final String TABLE_PRESENTATION_ASSESSMENT = "presentation_assessment";
     public static final String FIELD_ASSESSMENT_ID = "assessment_id";
     public static final String FIELD_PRESENTATIONS = "presentations";
+    public static final String HQL_ALL_PRESENTATIONS = "from presentation_main";
+    public static final String SQL_ALL_PRESENTATIONS = "select * from arch.dbo.presentation_main";
 }

@@ -79,4 +79,5 @@ public class Messages {
     public static final String SUCCESS_ASSESSMENT_GENERATED = "Assessments successfully generated";
     public static final String ERROR_ASSESSMENT_GET = "Unable to get assessments";
     public static final String ERROR_ASSESSMENT_UPDATE = "Unable to update assessment";
+    public static final String SHOW_SUMMARY_INFO = "Summary. Count: %s, time: %s";
 }

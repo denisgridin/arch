@@ -2,8 +2,13 @@ package ru.sfedu.Arch.lab5.api;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
+import org.hibernate.query.NativeQuery;
+import ru.sfedu.Arch.Constants;
 import ru.sfedu.Arch.Enums;
 import ru.sfedu.Arch.Result;
 import ru.sfedu.Arch.lab3.EntityApi;
@@ -569,4 +574,53 @@ public class ApiProvider extends EntityApi {
             return new Result(Enums.STATUS.error, Messages.ERROR_ASSESSMENT_UPDATE);
         }
     }
+
+    public Result getSummaryCriteria(){
+        try{
+            int startTime = (int) System.currentTimeMillis();
+            Session session = this.getSession();
+            Transaction transaction = session.beginTransaction();
+            Criteria criteria = session.createCriteria(Presentation.class);
+            criteria.setProjection(Projections.count(Constants.FIELD_ID));
+            List totalCount = criteria.list();
+            transaction.commit();
+            event.debug(1, totalCount);
+            int methodTime = (int) (System.currentTimeMillis() - startTime);
+            return new Result(Enums.STATUS.success, String.format(Messages.SHOW_SUMMARY_INFO, totalCount.get(0), methodTime));
+        } catch (Exception e) {
+            event.error(1, e);
+            return new Result(Enums.STATUS.error, e);
+        }
+    }
+
+    public Result getSummaryHQL(){
+        try{
+            int startTime = (int) System.currentTimeMillis();
+            Session session = this.getSession();
+            Query query = session.createQuery(Constants.HQL_ALL_PRESENTATIONS);
+            List presentationList = query.list();
+            event.debug(1, presentationList.size());
+            int methodTime = (int) (System.currentTimeMillis() - startTime);
+            return new Result(Enums.STATUS.success, String.format(Messages.SHOW_SUMMARY_INFO, presentationList.size(), methodTime));
+        } catch (Exception e) {
+            event.error(1, e);
+            return new Result(Enums.STATUS.error, e);
+        }
+    }
+
+    public Result getSummaryNative () {
+        try {
+            int startTime = (int) System.currentTimeMillis();
+            Session session = getSession();
+            NativeQuery query = session.createSQLQuery(Constants.SQL_ALL_PRESENTATIONS);
+            List resList = query.getResultList();
+            session.close();
+            int methodTime = (int) (System.currentTimeMillis() - startTime);
+            return new Result(Enums.STATUS.success, String.format(Messages.SHOW_SUMMARY_INFO, resList.size(), methodTime));
+        } catch (Exception error) {
+            event.error(1, error);
+            return new Result(Enums.STATUS.error, error);
+        }
+    }
+
 }
